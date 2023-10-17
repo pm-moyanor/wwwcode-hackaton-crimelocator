@@ -1,12 +1,15 @@
 import "./App.css";
+import CrimeMap from "./CrimeMap";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 function App() {
 
   return (
-    <div className="w-full h-screen text-4xl text-sky-400/100 flex items-center justify-center font-mono">
-      Hello World with Tailwind CSS
+    <div >
+      <CrimeMap />
     </div>
   );
 }
 
 export default App;
+
