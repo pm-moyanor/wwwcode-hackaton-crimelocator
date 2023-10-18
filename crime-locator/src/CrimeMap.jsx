@@ -71,6 +71,10 @@ function getColorAndSize(total_count) {
   }
 }
 
+
+
+
+
 const CrimeMap = ({submittedValue}) => {
   const mapContainerRef = useRef(null);//save map container
   const [map, setMap] = useState(null);
