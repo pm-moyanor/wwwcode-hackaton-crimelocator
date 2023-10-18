@@ -40,27 +40,27 @@ function SearchForm({ setSubmittedValue }) {
             onChange={handleInputChange}
           />
 
-          <div className="flex flex-row justify-between">
+          <div className="flex flex-row justify-between py-1">
             <input
-              className=" appearance-none bg-transparent text-gray-700 w-full py-1  leading-tight focus:outline-none"
+              className=" appearance-none bg-transparent text-gray-500 w-full py-1  leading-tight focus:outline-none"
               type="date"
               id="start"
               value={selectedStartDate}
               onChange={handleStartDateChange}
-              min="2018-01-01"
-              max="2018-12-31"
+              min="2010-01-01"
+              max="2023-10-18"
             />
 
             <span className=" align-middle mx-6 text-gray-500  mt-0.5 ">to</span>
 
             <input
-              className="appearance-none bg-transparent  w-full text-gray-700  py-1  leading-tight focus:outline-none"
+              className="appearance-none bg-transparent  w-full text-gray-500  py-1  leading-tight focus:outline-none"
               type="date"
               id="end"
               value={selectedEndDate}
               onChange={handleEndDateChange}
-              min="2018-01-01"
-              max="2018-12-31"
+              min="2010-01-01"
+              max="2023-10-18"
             />
           </div>
 
