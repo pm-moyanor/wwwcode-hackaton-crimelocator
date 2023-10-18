@@ -71,10 +71,11 @@ function getColorAndSize(total_count) {
   }
 }
 
-const CrimeMap = () => {
+const CrimeMap = ({submittedValue}) => {
   const mapContainerRef = useRef(null);//save map container
   const [map, setMap] = useState(null);
 
+  console.log("submitted", submittedValue);
   useEffect(() => {
     const newMap = new mapboxgl.Map({
       container: mapContainerRef.current,
