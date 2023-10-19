@@ -9,9 +9,19 @@ header {
   justify-content: center;
   align-items: center;
 }
+.title {
+  font-size: 2rem;
+}
 
 .map {
   display: flex;
   justify-content: center;
   width: auto;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
 }
