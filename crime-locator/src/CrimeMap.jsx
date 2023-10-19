@@ -164,7 +164,7 @@ console.log(submittedValue)
           </h1>
         </>
       )}
-      <div className="map container flex">
+      <div className="map">
         <div className="map-container" ref={mapContainerRef} />
       </div>
     </div>
