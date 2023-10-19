@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 
 const crimeTypes = [
-  "Theft",
-  "Burglary",
-  "Assault",
-  "Robbery",
-  "Murder",
-  "Rape",
-  "Drug",
+  "theft",
+  "burglary",
+  "assault",
+  "robbery",
+  "murder",
+  "rape",
+  "drug",
 ];
+
 
 function SearchForm({ setSubmittedValue }) {
   const [inputValue, setInputValue] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [errors, setErrors] = useState({}); // Store validation errors
 
   const handleInputChange = (e) => {
@@ -54,7 +55,7 @@ function SearchForm({ setSubmittedValue }) {
     if (isFormValid) {
       setSubmittedValue({
         zipcode: inputValue,
-        date: { startDate: selectedStartDate, endDate: selectedEndDate },
+        dates: { startDate: selectedStartDate, endDate: selectedEndDate },
         category: selectedCategory,
       });
       setInputValue("");

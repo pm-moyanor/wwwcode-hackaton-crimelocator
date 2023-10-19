@@ -4,13 +4,8 @@ import mapboxgl from "mapbox-gl";
 import "./CrimeMap.css";
 import { totalCountColors, categoryColors } from "../colors"; // Import both arrays
 
-
-
-
 mapboxgl.accessToken =
   "pk.eyJ1IjoicG1tb3lhbm9yIiwiYSI6ImNsbnVrZzN5bjBkOHkybHFqYXNzb3IxcjUifQ.99b7wHbQY6pShWHiVCNZnA";
-
-
 
 //colors arrays will be moved to another component to show a card with chart
 // logic render random zipcodes of Phoenix with random totalcount values
@@ -24,25 +19,23 @@ mapboxgl.accessToken =
 //header,footer,inputs
 //
 
-
-
-function getColorAndSize(total_count) {
+function getColorAndSize(totalCount) {
   const matchingColorAndSize = totalCountColors.find((option) => {
     const [min, max] = option.range;
-    return total_count >= min && total_count < max;
+    return totalCount >= min && totalCount < max;
   });
 
   if (matchingColorAndSize) {
     return matchingColorAndSize;
   } else {
-    console.log(`Color for ${total_count}: gray`);
+    console.log(`Color for ${totalCount}: gray`);
     // If no match found, return a default color and size, replace w/catch error
     return { color: "gray", width: 30, height: 30 };
   }
 }
 
 const CrimeMap = ({ submittedValue }) => {
-  console.log(submittedValue)
+
   const mapContainerRef = useRef(null); //save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
@@ -63,20 +56,15 @@ const CrimeMap = ({ submittedValue }) => {
     return { startDate: formattedStartDate, endDate: formattedEndDate };
   }
 
-  const submittedValue1 = {
-    zipcode: "85307",
-    dates: {
-      startDate: "2020-10-03",
-      endDate: "2023-10-04",
-    },
-    category:"Murder"
-  };
 
-  const { zipcode, dates ,category} = submittedValue1;
-  const { startDate, endDate } = dates;
+  //"201600000594484",11/01/2015  00:00,,"RAPE","13XX E ALMERIA RD","85006","SINGLE FAMILY HOUSE","BD30"
+
+  const { zipcode, dates, category } = submittedValue || {}; // Destructure with a default empty object
+  const { startDate, endDate } = dates || {}; // Destructure with a default empty object
+
   let baseURL = "";
   const formattedDate = formatDateForURL(startDate, endDate);
-  console.log(dates)
+ 
   useEffect(() => {
     if (formattedDate) {
       baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedDate.startDate}&&end_date=${formattedDate.endDate}`;
@@ -113,7 +101,7 @@ const CrimeMap = ({ submittedValue }) => {
       // Save the map instance in the state
       setMap(newMap);
 
-      const createMarker = (zipcode, totalCount) => {
+      const createMarker = (zipcode, totalCount ,totalCountColors) => {
         fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
         )
@@ -169,7 +157,9 @@ const CrimeMap = ({ submittedValue }) => {
 
   return (
     <div>
+        <h1>amount of {category}: {totalCount}</h1>
       <div className="map-container" ref={mapContainerRef} />
+    
     </div>
   );
 };
