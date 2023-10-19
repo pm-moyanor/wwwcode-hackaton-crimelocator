@@ -1,7 +1,4 @@
-import React from "react";
-import { useState } from "react";
-
-// all styles can be changed
+import React, { useState } from "react";
 
 const crimeTypes = [
   "Theft",
@@ -18,6 +15,7 @@ function SearchForm({ setSubmittedValue }) {
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [errors, setErrors] = useState({}); // Store validation errors
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -26,6 +24,7 @@ function SearchForm({ setSubmittedValue }) {
   const handleStartDateChange = (e) => {
     setSelectedStartDate(e.target.value);
   };
+
   const handleEndDateChange = (e) => {
     setSelectedEndDate(e.target.value);
   };
@@ -34,17 +33,34 @@ function SearchForm({ setSubmittedValue }) {
     setSelectedCategory(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    setSubmittedValue({
-      zipcode: inputValue,
-      date: { startDate: selectedStartDate, endDate: selectedEndDate },
-      category: setSelectedCategory,
-    });
+  const validateInputs = () => {
+    const newErrors = {};
+    if (!inputValue) {
+      newErrors.zipcode = "Zipcode is required";
+    }
+    if (!selectedStartDate || !selectedEndDate) {
+      newErrors.date = "Start and End date are required";
+    }
+    setErrors(newErrors);
 
-    setInputValue("");
+    // Return true if there are no errors, indicating that the form is valid
+    return Object.keys(newErrors).length === 0;
   };
-  // styles need adjust
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const isFormValid = validateInputs(); // Check form validation
+
+    if (isFormValid) {
+      setSubmittedValue({
+        zipcode: inputValue,
+        date: { startDate: selectedStartDate, endDate: selectedEndDate },
+        category: selectedCategory,
+      });
+      setInputValue("");
+    }
+  };
+
   return (
     <div className="w-full m-20 max-w-4xl">
       <form className="w-full " onSubmit={handleSubmit}>
@@ -56,6 +72,9 @@ function SearchForm({ setSubmittedValue }) {
             value={inputValue}
             onChange={handleInputChange}
           />
+          {errors.zipcode && (
+            <p className="text-red-500 text-sm">{errors.zipcode}</p>
+          )}
 
           <select
             className="appearance-none bg-transparent text-gray-500 w-40 py-1 mr-3 leading-tight focus:outline-none"
@@ -72,7 +91,7 @@ function SearchForm({ setSubmittedValue }) {
 
           <div className="flex flex-row justify-between py-1">
             <input
-              className=" appearance-none bg-transparent text-gray-500 w-full py-1  leading-tight focus:outline-none"
+              className="appearance-none bg-transparent text-gray-500 w-36 py-1 leading-tight focus:outline-none"
               type="date"
               id="start"
               value={selectedStartDate}
@@ -80,13 +99,12 @@ function SearchForm({ setSubmittedValue }) {
               min="2010-01-01"
               max="2023-10-18"
             />
+            {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
 
-            <span className=" align-middle mx-6 text-gray-500  mt-0.5 ">
-              to
-            </span>
+            <span className="align-middle mx-6 text-gray-500 mt-0.5 ">to</span>
 
             <input
-              className="appearance-none bg-transparent  w-full text-gray-500  py-1  leading-tight focus:outline-none"
+              className="appearance-none bg-transparent text-gray-500 w-36 py-1 leading-tight focus:outline-none"
               type="date"
               id="end"
               value={selectedEndDate}
@@ -97,10 +115,10 @@ function SearchForm({ setSubmittedValue }) {
           </div>
 
           <button
-            className="flex-shrink-0. bg-blue-800 hover:bg-blue-500 border-blue-800 hover:border-blue-500 text-sm border-4 text-white py-1 px-2"
+            className="flex-shrink-0 bg-blue-800 hover:bg-blue-500 border-blue-800 hover:border-blue-500 text-sm border-4 text-white py-1 px-2"
             type="submit"
           >
-            search
+            Search
           </button>
         </div>
       </form>

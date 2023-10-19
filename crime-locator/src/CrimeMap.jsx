@@ -6,19 +6,11 @@ import { totalCountColors, categoryColors } from "../colors"; // Import both arr
 
 
 
-console.log(totalCountColors)
+
 mapboxgl.accessToken =
   "pk.eyJ1IjoicG1tb3lhbm9yIiwiYSI6ImNsbnVrZzN5bjBkOHkybHFqYXNzb3IxcjUifQ.99b7wHbQY6pShWHiVCNZnA";
 
-const crimeTypes = [
-  "Theft",
-  "Burglary",
-  "Assault",
-  "Robbery",
-  "Murder",
-  "Rape",
-  "Drug",
-];
+
 
 //colors arrays will be moved to another component to show a card with chart
 // logic render random zipcodes of Phoenix with random totalcount values
@@ -50,6 +42,7 @@ function getColorAndSize(total_count) {
 }
 
 const CrimeMap = ({ submittedValue }) => {
+  console.log(submittedValue)
   const mapContainerRef = useRef(null); //save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
@@ -76,16 +69,17 @@ const CrimeMap = ({ submittedValue }) => {
       startDate: "2020-10-03",
       endDate: "2023-10-04",
     },
+    category:"Murder"
   };
 
-  const { zipcode, dates } = submittedValue1;
+  const { zipcode, dates ,category} = submittedValue1;
   const { startDate, endDate } = dates;
   let baseURL = "";
   const formattedDate = formatDateForURL(startDate, endDate);
-
+  console.log(dates)
   useEffect(() => {
     if (formattedDate) {
-      baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=theft&&start_date=${formattedDate.startDate}&&end_date=${formattedDate.endDate}`;
+      baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedDate.startDate}&&end_date=${formattedDate.endDate}`;
       console.log(baseURL);
     } else {
       console.log("Empty date", startDate, endDate);
