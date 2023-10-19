@@ -128,6 +128,12 @@ function SearchForm({ setSubmittedValue }) {
             onChange={handleCategoryChange}
           >
             <option value="">Select Category</option>
+            <option value="">All Types</option> {/* Add the "All Types" option */}
+  {crimeTypes.map((type) => (
+    <option key={type} value={type}>
+      {type}
+    </option>
+  ))}
             {crimeTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
