@@ -12,6 +12,8 @@ const crimeTypes = [
 
 
 function SearchForm({ setSubmittedValue }) {
+  const [selectedSearchMethod, setSelectedSearchMethod] = useState("zipcode");
+
   const [inputValue, setInputValue] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
@@ -20,6 +22,10 @@ function SearchForm({ setSubmittedValue }) {
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
+  };
+
+  const handleSearchMethodChange = (e) => {
+    setSelectedSearchMethod(e.target.value);
   };
 
   const handleStartDateChange = (e) => {
@@ -42,6 +48,10 @@ function SearchForm({ setSubmittedValue }) {
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = "Start and End date are required";
     }
+    if (selectedSearchMethod === "city" && !selectedCategory) {
+      newErrors.category = "Category is required when searching by city";
+    }
+
     setErrors(newErrors);
 
     // Return true if there are no errors, indicating that the form is valid
@@ -51,32 +61,67 @@ function SearchForm({ setSubmittedValue }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isFormValid = validateInputs(); // Check form validation
-
+  
     if (isFormValid) {
       setSubmittedValue({
-        zipcode: inputValue,
+        searchMethod: selectedSearchMethod,
+        zipcode: selectedSearchMethod === "zipcode" ? inputValue : null,
+        city: selectedSearchMethod === "city" ? inputValue : null,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
         category: selectedCategory,
       });
+  
+      // Reset the form by setting the state variables to their initial values
       setInputValue("");
+      setSelectedStartDate("");
+      setSelectedEndDate("");
+      setSelectedCategory("");
     }
   };
+  
 
   return (
     <div className="w-full m-20 max-w-4xl">
       <form className="w-full " onSubmit={handleSubmit}>
-        <div className="flex items-center justify-between border-b border-blue-500 py-2">
-          <input
-            className="appearance-none border border-sky-500 bg-transparent border-none w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-            type="text"
-            placeholder="zipcode"
-            value={inputValue}
-            onChange={handleInputChange}
-          />
-          {errors.zipcode && (
-            <p className="text-red-500 text-sm">{errors.zipcode}</p>
-          )}
+      <div className="flex items-center justify-between border-b border-blue-500 py-2">
+          <select
+            className="appearance-none bg-transparent text-gray-500 w-40 py-1 leading-tight focus:outline-none"
+            value={selectedSearchMethod}
+            onChange={handleSearchMethodChange}
+          >
+            <option value="zipcode">Search by Zipcode</option>
+            <option value="city">Search by City</option>
+          </select>
 
+          {selectedSearchMethod === "zipcode" && (
+          <div>
+            <input
+              className="appearance-none border border-sky-500 bg-transparent border-none w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            {errors.zipcode && (
+              <p className="text-red-500 text-sm">{errors.zipcode}</p>
+            )}
+          </div>
+        )}
+
+        {selectedSearchMethod === "city" && (
+          <div>
+            <input
+              className="appearance-none border border-sky-500 bg-transparent border-none w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+            />
+            {errors.city && (
+              <p className="text-red-500 text-sm">{errors.city}</p>
+            )}
+          </div>
+        )}
+
+          
           <select
             className="appearance-none bg-transparent text-gray-500 w-40 py-1 mr-3 leading-tight focus:outline-none"
             value={selectedCategory}

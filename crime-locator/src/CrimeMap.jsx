@@ -35,11 +35,10 @@ function getColorAndSize(totalCount) {
 }
 
 const CrimeMap = ({ submittedValue }) => {
-
   const mapContainerRef = useRef(null); //save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
-
+console.log(submittedValue)
   function formatDateForURL(startDate, endDate) {
     if (!startDate || !endDate) {
       return null;
@@ -56,15 +55,14 @@ const CrimeMap = ({ submittedValue }) => {
     return { startDate: formattedStartDate, endDate: formattedEndDate };
   }
 
-
   //"201600000594484",11/01/2015  00:00,,"RAPE","13XX E ALMERIA RD","85006","SINGLE FAMILY HOUSE","BD30"
 
-  const { zipcode, dates, category } = submittedValue || {}; // Destructure with a default empty object
-  const { startDate, endDate } = dates || {}; // Destructure with a default empty object
+  const { zipcode, dates, category } = submittedValue || {}; 
+  const { startDate, endDate } = dates || {}; 
 
   let baseURL = "";
   const formattedDate = formatDateForURL(startDate, endDate);
- 
+
   useEffect(() => {
     if (formattedDate) {
       baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedDate.startDate}&&end_date=${formattedDate.endDate}`;
@@ -101,7 +99,7 @@ const CrimeMap = ({ submittedValue }) => {
       // Save the map instance in the state
       setMap(newMap);
 
-      const createMarker = (zipcode, totalCount ,totalCountColors) => {
+      const createMarker = (zipcode, totalCount, totalCountColors) => {
         fetch(
           `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
         )
@@ -157,9 +155,18 @@ const CrimeMap = ({ submittedValue }) => {
 
   return (
     <div>
-        <h1>amount of {category}: {totalCount}</h1>
-      <div className="map-container" ref={mapContainerRef} />
-    
+      {category ? (
+        <h1>crime amount:{totalCount}</h1>
+      ) : (
+        <>
+          
+          <h1>
+            amount of {category}: {totalCount}
+          </h1>
+      
+        </>
+      )}
+          <div className="map-container" ref={mapContainerRef} />
     </div>
   );
 };
