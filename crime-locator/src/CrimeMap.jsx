@@ -159,14 +159,14 @@ console.log(submittedValue)
         <h1>crime amount:{totalCount}</h1>
       ) : (
         <>
-          
           <h1>
             amount of {category}: {totalCount}
           </h1>
-      
         </>
       )}
-          <div className="map-container" ref={mapContainerRef} />
+      <div className="map container flex">
+        <div className="map-container" ref={mapContainerRef} />
+      </div>
     </div>
   );
 };
