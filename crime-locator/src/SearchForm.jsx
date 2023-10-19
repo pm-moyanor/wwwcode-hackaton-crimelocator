@@ -3,10 +3,21 @@ import { useState } from "react";
 
 // all styles can be changed
 
+const crimeTypes = [
+  "Theft",
+  "Burglary",
+  "Assault",
+  "Robbery",
+  "Murder",
+  "Rape",
+  "Drug",
+];
+
 function SearchForm({ setSubmittedValue }) {
   const [inputValue, setInputValue] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -18,16 +29,22 @@ function SearchForm({ setSubmittedValue }) {
   const handleEndDateChange = (e) => {
     setSelectedEndDate(e.target.value);
   };
+
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     setSubmittedValue({
       zipcode: inputValue,
       date: { startDate: selectedStartDate, endDate: selectedEndDate },
+      category: setSelectedCategory,
     });
 
     setInputValue("");
   };
-// styles need adjust
+  // styles need adjust
   return (
     <div className="w-full m-20 max-w-4xl">
       <form className="w-full " onSubmit={handleSubmit}>
@@ -40,6 +57,19 @@ function SearchForm({ setSubmittedValue }) {
             onChange={handleInputChange}
           />
 
+          <select
+            className="appearance-none bg-transparent text-gray-500 w-40 py-1 mr-3 leading-tight focus:outline-none"
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+          >
+            <option value="">Select Category</option>
+            {crimeTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+
           <div className="flex flex-row justify-between py-1">
             <input
               className=" appearance-none bg-transparent text-gray-500 w-full py-1  leading-tight focus:outline-none"
@@ -51,7 +81,9 @@ function SearchForm({ setSubmittedValue }) {
               max="2023-10-18"
             />
 
-            <span className=" align-middle mx-6 text-gray-500  mt-0.5 ">to</span>
+            <span className=" align-middle mx-6 text-gray-500  mt-0.5 ">
+              to
+            </span>
 
             <input
               className="appearance-none bg-transparent  w-full text-gray-500  py-1  leading-tight focus:outline-none"
