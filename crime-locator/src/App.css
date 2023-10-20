@@ -91,11 +91,11 @@ footer {
   font-size: 1.5rem;
 }
 
-@media screen and (max-width: 991px) {
-  header {
-    width: calc(100% - 20px);
-  }
+/* @media screen and (max-width: 1200px) {
 
+} */
+
+@media screen and (max-width: 991px) {
   .box {
     justify-content: center !important;
   }
@@ -109,13 +109,6 @@ footer {
   }
 }
 
-@media screen and (max-width: 576px) {
-  header {
-    width: 100%;
-    border-radius: 0;
-  }
+/* @media screen and (max-width: 576px) {
 
-  .header-box {
-    padding-top: 0;
-  }
-}
+} */
