@@ -3,31 +3,45 @@ import "./footer.css";
 
 const Footer = () => {
   return (
-    <div className="bg-indigo-500 text-white">
+    <div className="text-white">
       <footer>
-        <article>
-          <img
-            src="wwwcode-hackaton-crimelocator/crime-locator/src/assets/ico-github.svg"
-            alt="GitHub icon"
-          />
-          <a href="#">Radha</a>
-        </article>
-        <span>|</span>
-        <article>
-          <img
-            src="wwwcode-hackaton-crimelocator/crime-locator/src/assets/ico-github.svg"
-            alt="GitHub icon"
-          />
-          <a href="#">Paula</a>
-        </article>
-        <span>|</span>
-        <article>
-          <img
-            src="wwwcode-hackaton-crimelocator/crime-locator/src/assets/ico-github.svg"
-            alt="GitHub icon"
-          />
-          <a href="#">Shirley</a>
-        </article>
+        <div className="team">
+          Made by:
+          <div className="team-members">
+            <article className="pr-10">
+              <i class="fa-brands fa-github"></i>
+              <a
+                href="https://github.com/KR411-prog"
+                target="_blank"
+                className="name pl-2"
+              >
+                Radha
+              </a>
+            </article>
+
+            <article className="pr-10">
+              <i class="fa-brands fa-github"></i>
+              <a
+                href="https://github.com/pm-moyanor"
+                target="_blank"
+                className="name pl-2"
+              >
+                Paula Moyano
+              </a>
+            </article>
+
+            <article>
+              <i class="fa-brands fa-github"></i>
+              <a
+                href="https://www.github.com/Shinnmar"
+                target="_blank"
+                className="name pl-2"
+              >
+                Shirley Ramos
+              </a>
+            </article>
+          </div>
+        </div>
       </footer>
     </div>
   );

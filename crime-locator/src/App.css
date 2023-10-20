@@ -1,16 +1,29 @@
 #root {
   text-align: center;
-  background-color: rgb(196, 213, 248);
+  background-color: rgb(160, 179, 248);
 }
 
 header {
+  border-radius: 10px;
+  width: calc(100% - 200px);
+  background: #FFFFFF;
+  margin: 0 auto;
   height: 80px;
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: none;
+  padding: 0 20px;
+  box-shadow: 0 1px 32px rgba(241, 159, 71, 0.15);
+  overflow: hidden;
 }
+
+.header-box {
+  padding-top: 30px;
+}
+
 .title {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .map {
@@ -20,8 +33,56 @@ header {
 }
 
 footer {
+  background-color: rgb(2, 17, 32);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150px;
+  height: 100%;
+  padding: 4rem 0;
+  font-size: 20px;
+}
+
+
+.team {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-members {
+  display: flex;
+  flex-direction: row;
+}
+
+.name:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 991px) {
+  header {
+      width: calc(100% - 20px);
+  }
+
+  .box {
+    justify-content: center !important;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  nav {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 576px) {
+
+  header {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  .header-box {
+    padding-top: 0;
+  }
 }
