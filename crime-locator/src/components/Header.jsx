@@ -7,7 +7,10 @@ const Header = () => {
       <header className="bg-white">
         <div className="container box justify-between lg:justify-center flex flex-row items-center p-6">
           <div>
-            <h1 className="title">Crimen Locator</h1>
+            <img
+              src="../src/assets/logo-crime-locator.png"
+              alt="Crime Locator logo"
+            />
           </div>
           <nav className="nav flex flex-wrap items-center justify-center pl-24 text-base md:ml-auto">
             <a href="#intro" className="mr-20 font-medium hover:text-gray-900">

@@ -15,7 +15,7 @@ const Footer = () => {
                 target="_blank"
                 className="name pl-2"
               >
-                Radha
+                Radha Ramadoss
               </a>
             </article>
 

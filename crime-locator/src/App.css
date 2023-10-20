@@ -1,6 +1,7 @@
 #root {
   text-align: center;
   background-color: rgb(231, 231, 234);
+  font-family: "Ruda", sans-serif;
 }
 
 html {
@@ -12,7 +13,7 @@ header {
   position: fixed;
   z-index: 1;
   width: 100%;
-  background: #FFFFFF;
+  background: #ffffff;
   margin: 0 auto;
   height: 80px;
   display: flex;
@@ -68,7 +69,6 @@ footer {
   font-size: 20px;
 }
 
-
 .team {
   display: flex;
   flex-direction: column;
@@ -87,9 +87,13 @@ footer {
   text-decoration: underline;
 }
 
+.fa-github:before {
+  font-size: 1.5rem;
+}
+
 @media screen and (max-width: 991px) {
   header {
-      width: calc(100% - 20px);
+    width: calc(100% - 20px);
   }
 
   .box {
@@ -106,7 +110,6 @@ footer {
 }
 
 @media screen and (max-width: 576px) {
-
   header {
     width: 100%;
     border-radius: 0;
