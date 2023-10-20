@@ -81,63 +81,58 @@ function SearchForm({ setSubmittedValue }) {
   
 
   return (
-    <div className="w-full m-20 max-w-4xl">
+    <div>
       <form className="w-full " onSubmit={handleSubmit}>
-      <div className="flex items-center justify-between border-b border-blue-500 py-2">
-          <select
-            className="appearance-none bg-transparent text-gray-500 w-40 py-1 leading-tight focus:outline-none"
-            value={selectedSearchMethod}
-            onChange={handleSearchMethodChange}
-          >
-            <option value="zipcode">Search by Zipcode</option>
-            <option value="city">Search by City</option>
-          </select>
+        <div className="filters flex items-center justify-center mt-10 mb-10">
+          <div className="first input flex items-center justify-center mr-10">
+            <select
+              value={selectedSearchMethod}
+              onChange={handleSearchMethodChange}
+            >
+              <option value="zipcode">Search by Zipcode</option>
+              <option value="city">Search by City</option>
+            </select>
 
-          {selectedSearchMethod === "zipcode" && (
-          <div>
-            <input
-              className="appearance-none border border-sky-500 bg-transparent border-none w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-            />
-            {errors.zipcode && (
-              <p className="text-red-500 text-sm">{errors.zipcode}</p>
+            {selectedSearchMethod === "zipcode" && (
+              <div>
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                />
+                {errors.zipcode && (
+                  <p className="text-red-500 text-sm">{errors.zipcode}</p>
+                )}
+              </div>
             )}
           </div>
-        )}
 
-        {selectedSearchMethod === "city" && (
-          <div>
-            <input
-              className="appearance-none border border-sky-500 bg-transparent border-none w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-            />
-            {errors.city && (
-              <p className="text-red-500 text-sm">{errors.city}</p>
-            )}
+          {selectedSearchMethod === "city" && (
+            <div>
+              <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+              />
+              {errors.city && (
+                <p className="text-red-500 text-sm">{errors.city}</p>
+              )}
+            </div>
+          )}
+
+          <div className="second input flex items-center justify-center mr-10">
+            <select value={selectedCategory} onChange={handleCategoryChange}>
+              <option value="">Select Category</option>
+              {crimeTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
 
-          
-          <select
-            className="appearance-none bg-transparent text-gray-500 w-40 py-1 mr-3 leading-tight focus:outline-none"
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-          >
-            <option value="">Select Category</option>
-            {crimeTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-
-          <div className="flex flex-row justify-between py-1">
+          <div className="third input flex items-center justify-center">
             <input
-              className="appearance-none bg-transparent text-gray-500 w-36 py-1 leading-tight focus:outline-none"
               type="date"
               id="start"
               value={selectedStartDate}
@@ -145,12 +140,13 @@ function SearchForm({ setSubmittedValue }) {
               min="2010-01-01"
               max="2023-10-18"
             />
-            {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+            {errors.date && (
+              <p className="text-red-500 text-sm">{errors.date}</p>
+            )}
 
             <span className="align-middle mx-6 text-gray-500 mt-0.5 ">to</span>
 
             <input
-              className="appearance-none bg-transparent text-gray-500 w-36 py-1 leading-tight focus:outline-none"
               type="date"
               id="end"
               value={selectedEndDate}
@@ -161,7 +157,7 @@ function SearchForm({ setSubmittedValue }) {
           </div>
 
           <button
-            className="flex-shrink-0 bg-blue-800 hover:bg-blue-500 border-blue-800 hover:border-blue-500 text-sm border-4 text-white py-1 px-2"
+            className="text-white bg-indigo-600 focus:outline-none focus:ring-cyan-300 shadow-cyan-500/50 dark:shadow-cyan-800/80 font-medium text-sm px-5 py-2.5 text-center ml-2"
             type="submit"
           >
             Search
