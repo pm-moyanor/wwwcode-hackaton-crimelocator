@@ -33,10 +33,28 @@ header {
 }
 
 footer {
+  background-color: rgb(2, 17, 32);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
+  padding: 4rem 0;
+  font-size: 20px;
+}
+
+
+.team {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-members {
+  display: flex;
+  flex-direction: row;
+}
+
+.name:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 991px) {

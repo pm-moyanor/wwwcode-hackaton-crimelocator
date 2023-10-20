@@ -3,24 +3,44 @@ import "./footer.css";
 
 const Footer = () => {
   return (
-    <div className="bg-black text-white">
+    <div className="text-white">
       <footer>
-        <div>
+        <div className="team">
           Made by:
-          <article>
-            <i class="fa-brands fa-github"></i>
-            <a href="#">Radha</a>
-          </article>
-          <span>|</span>
-          <article>
-            <i class="fa-brands fa-github"></i>
-            <a href="#">Paula</a>
-          </article>
-          <span>|</span>
-          <article>
-            <i class="fa-brands fa-github"></i>
-            <a href="#">Shirley</a>
-          </article>
+          <div className="team-members">
+            <article className="pr-10">
+              <i class="fa-brands fa-github"></i>
+              <a
+                href="https://github.com/KR411-prog"
+                target="_blank"
+                className="name pl-2"
+              >
+                Radha
+              </a>
+            </article>
+
+            <article className="pr-10">
+              <i class="fa-brands fa-github"></i>
+              <a
+                href="https://github.com/pm-moyanor"
+                target="_blank"
+                className="name pl-2"
+              >
+                Paula Moyano
+              </a>
+            </article>
+
+            <article>
+              <i class="fa-brands fa-github"></i>
+              <a
+                href="https://www.github.com/Shinnmar"
+                target="_blank"
+                className="name pl-2"
+              >
+                Shirley Ramos
+              </a>
+            </article>
+          </div>
         </div>
       </footer>
     </div>
