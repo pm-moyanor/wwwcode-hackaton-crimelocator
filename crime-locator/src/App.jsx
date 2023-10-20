@@ -1,11 +1,12 @@
 import "./App.css";
 import CrimeMap from "./CrimeMap";
 import 'mapbox-gl/dist/mapbox-gl.css';
-import SearchForm from "./SearchForm";
 import { useState } from "react";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Intro from "./components/Intro";
+// import SearchForm from "./SearchForm";
 import SearchFormC from "./components/SearchFormC";
+import Footer from "./components/Footer";
 
 function App() {
   const [submittedValue, setSubmittedValue] = useState("");
@@ -14,8 +15,11 @@ function App() {
   return (
     <div>
       <Header />
-      <SearchFormC    submittedValue={submittedValue}
-        setSubmittedValue={setSubmittedValue}/>
+      <Intro />
+      <SearchFormC
+        submittedValue={submittedValue}
+        setSubmittedValue={setSubmittedValue}
+      />
       {/* <SearchForm
         submittedValue={submittedValue}
         setSubmittedValue={setSubmittedValue}

@@ -10,7 +10,7 @@ const Header = () => {
             <h1 className="title">Crimen Locator</h1>
           </div>
           <nav className="nav flex flex-wrap items-center justify-center pl-24 text-base md:ml-auto">
-            <a href="#_" className="mr-20 font-medium hover:text-gray-900">
+            <a href="#intro" className="mr-20 font-medium hover:text-gray-900">
               About
             </a>
             <a href="#_" className="mr-20 font-medium hover:text-gray-900">

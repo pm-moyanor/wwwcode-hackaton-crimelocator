@@ -1,11 +1,17 @@
 #root {
   text-align: center;
-  background-color: rgb(160, 179, 248);
+  background-color: rgb(235, 238, 250);
+}
+
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 header {
-  border-radius: 10px;
-  width: calc(100% - 200px);
+  position: fixed;
+  z-index: 1;
+  width: 100%;
   background: #FFFFFF;
   margin: 0 auto;
   height: 80px;
@@ -18,12 +24,28 @@ header {
   overflow: hidden;
 }
 
-.header-box {
-  padding-top: 30px;
-}
-
 .title {
   font-size: 1.5rem;
+}
+
+.intro {
+  position: relative;
+  height: 500px;
+  padding: 3rem 0;
+  background-image: url("./assets/map-locator.jpg");
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+
+.overlay {
+  position: absolute;
+  height: inherit;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  padding: 3rem 0;
+  background-color: rgba(0, 0, 0, 0.734);
 }
 
 .map {
