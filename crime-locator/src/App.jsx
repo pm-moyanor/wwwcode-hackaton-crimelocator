@@ -7,6 +7,7 @@ import Intro from "./components/Intro";
 // import SearchForm from "./SearchForm";
 import SearchFormC from "./components/SearchFormC";
 import Footer from "./components/Footer";
+import ColorChart from "./components/ColorChart";
 
 function App() {
   const [submittedValue, setSubmittedValue] = useState("");
@@ -25,6 +26,7 @@ function App() {
         setSubmittedValue={setSubmittedValue}
       /> */}
       <CrimeMap submittedValue={submittedValue} />
+      <ColorChart/>
       <Footer />
     </div>
   );

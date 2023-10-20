@@ -74,7 +74,6 @@ const CrimeMap = ({ submittedValue }) => {
             if (data.count) {
               let count = data.count;
 
-              // Since there's no zipcode in the response, you can use the provided zipcode
               const { zipcode } = submittedValue;
 
               const matchingColorAndSize = getColorAndSize(count);
@@ -132,12 +131,12 @@ const CrimeMap = ({ submittedValue }) => {
           .then((cityResponse) => {
             const cityData = cityResponse.data;
 
-            // Extract all unique zip codes from cityData
+            // Extract all unique zip codes fro cityData
             const zipcodes = Array.from(
               new Set(cityData.map((item) => item.zipcode))
             );
 
-            // Define a function to fetch categories for zip codes
+            // function to fetch categories for zip codes
             const fetchCategoriesForZipcodes = (zipcodes) => {
               zipcodes.forEach((zipcode) => {
                 axios
@@ -198,7 +197,7 @@ const CrimeMap = ({ submittedValue }) => {
               });
             };
 
-            // Check if a category is provided and fetch categories for zip codes
+            // Check if a category is provided and fetch categories for zipcodes
             if (category) {
               fetchCategoriesForZipcodes(zipcodes);
             }
