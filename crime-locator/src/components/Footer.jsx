@@ -4,9 +4,9 @@ import "./footer.css";
 const Footer = () => {
   return (
     <div className="text-white">
-      <footer>
+      <footer id="footer">
         <div className="team">
-          Made by:
+          <span className="team-subtitle">Made by:</span>
           <div className="team-members">
             <article className="pr-10">
               <i class="fa-brands fa-github"></i>
