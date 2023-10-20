@@ -48,9 +48,9 @@ function SearchFormC({ setSubmittedValue }) {
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = "Start and End date are required";
     }
-    if (selectedSearchMethod === "city" && !selectedCategory) {
-      newErrors.category = "Category is required when searching by city";
-    }
+    // if (selectedSearchMethod === "city" && !selectedCategory) {
+    //   newErrors.category = "Category is required when searching by city";
+    // }
 
     setErrors(newErrors);
 
@@ -65,7 +65,7 @@ function SearchFormC({ setSubmittedValue }) {
       setSubmittedValue({
         searchMethod: selectedSearchMethod,
         zipcode: selectedSearchMethod === "zipcode" ? inputValue : null,
-        city: selectedSearchMethod === "city" ? inputValue : null,
+        city: selectedSearchMethod === "city" ? "city": null,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
         category: selectedCategory,
       });
