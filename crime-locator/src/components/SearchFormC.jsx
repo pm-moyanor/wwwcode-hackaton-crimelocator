@@ -127,6 +127,7 @@ function SearchFormC({ setSubmittedValue }) {
               onChange={handleSearchMethodChange}
             />
             <label htmlFor="category">Search by Category</label>
+            {selectedSearchMethod === "category" && (
             <select
               className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
               value={selectedCategory}
@@ -140,6 +141,7 @@ function SearchFormC({ setSubmittedValue }) {
                 </option>
               ))}
             </select>
+            )}
           </div>
 
         </div>
