@@ -78,8 +78,8 @@ function SearchFormC({ setSubmittedValue }) {
   };
 
   return (
-    <div className=" m-20 max-w-4xl">
-      <form className="border border-sky-500" onSubmit={handleSubmit}>
+    <div className="search-box m-auto" id="map">
+      <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
         <div className="flex flex-row py-1">
           <div className="py-1 mr-3 ">
             <input

@@ -13,10 +13,13 @@ const Header = () => {
             <a href="#intro" className="mr-20 font-medium hover:text-gray-900">
               About
             </a>
-            <a href="#_" className="mr-20 font-medium hover:text-gray-900">
+            <a href="#map" className="mr-20 font-medium hover:text-gray-900">
+              Map
+            </a>
+            <a href="#readme" className="mr-20 font-medium hover:text-gray-900">
               READ ME
             </a>
-            <a href="#_" className="font-medium hover:text-gray-900">
+            <a href="#footer" className="font-medium hover:text-gray-900">
               Team
             </a>
           </nav>

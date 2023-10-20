@@ -1,6 +1,6 @@
 #root {
   text-align: center;
-  background-color: rgb(235, 238, 250);
+  background-color: rgb(231, 231, 234);
 }
 
 html {
@@ -48,6 +48,10 @@ header {
   background-color: rgba(0, 0, 0, 0.734);
 }
 
+.search-box {
+  padding: 5rem 0;
+}
+
 .map {
   display: flex;
   justify-content: center;
@@ -60,7 +64,7 @@ footer {
   justify-content: center;
   align-items: center;
   height: 100%;
-  padding: 4rem 0;
+  padding: 5rem 0 6rem 0;
   font-size: 20px;
 }
 
@@ -73,6 +77,10 @@ footer {
 .team-members {
   display: flex;
   flex-direction: row;
+}
+
+.team-subtitle {
+  margin-bottom: 10px;
 }
 
 .name:hover {
