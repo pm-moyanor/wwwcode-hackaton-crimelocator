@@ -26,7 +26,6 @@ const CrimeMap = ({ submittedValue }) => {
   const mapContainerRef = useRef(null); // Save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
-  console.log(submittedValue);
 
   useEffect(() => {
     const newMap = new mapboxgl.Map({
@@ -50,72 +49,220 @@ const CrimeMap = ({ submittedValue }) => {
 
       const { zipcode, dates, category, searchMethod } = submittedValue || {};
       const { startDate, endDate } = dates || {};
-      const formattedStartDate = `${startDate.split("-")[1]}/${startDate.split("-")[2]}/${startDate.split("-")[0]}`;
-      const formattedEndDate = `${endDate.split("-")[1]}/${endDate.split("-")[2]}/${endDate.split("-")[0]}`;
-      
+      const formattedStartDate = `${startDate.split("-")[1]}/${
+        startDate.split("-")[2]
+      }/${startDate.split("-")[0]}`;
+      const formattedEndDate = `${endDate.split("-")[1]}/${
+        endDate.split("-")[2]
+      }/${endDate.split("-")[0]}`;
+
       let baseURL = "";
 
       if (searchMethod === "zipcode" && zipcode) {
-        baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
-      } else if (searchMethod === "city") {
-        baseURL = `http://localhost:9090/crimeByCity?city=Phoenix&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
-      } else if (searchMethod === "category") {
-        baseURL = `http://localhost:9090/crimeByCategory?category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
-      }
+        if (!category) {
+          // If category is empty, exclude it from the URL
+          baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
+        } else {
+          baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
+        }
 
-      if (baseURL) {
         axios
           .get(baseURL)
           .then((response) => {
             const data = response.data;
+            console.log(data);
+            if (data.count) {
+              let count = data.count;
 
-            if (data.length > 0) {
-              data.forEach((item) => {
-                const { zipcode, count } = item;
-                const matchingColorAndSize = getColorAndSize(count);
+              // Since there's no zipcode in the response, you can use the provided zipcode
+              const { zipcode } = submittedValue;
 
-                fetch(
-                  `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
-                )
+              const matchingColorAndSize = getColorAndSize(count);
+
+              fetch(
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
+              )
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                  }
+                  return response.json();
+                })
+                .then((geocodingData) => {
+                  if (
+                    geocodingData.features &&
+                    geocodingData.features.length > 0
+                  ) {
+                    const [longitude, latitude] =
+                      geocodingData.features[0].center;
+
+                    const customMarkerElement = document.createElement("div");
+                    customMarkerElement.className = "custom-marker";
+                    customMarkerElement.innerHTML = `<div class="marker-content">${
+                      count || ""
+                    }</div>`;
+
+                    customMarkerElement.style.backgroundColor =
+                      matchingColorAndSize.color;
+                    customMarkerElement.style.width =
+                      matchingColorAndSize.width + "px";
+                    customMarkerElement.style.height =
+                      matchingColorAndSize.height + "px";
+
+                    new mapboxgl.Marker({ element: customMarkerElement })
+                      .setLngLat([longitude, latitude])
+                      .addTo(newMap);
+                  } else {
+                    alert("No results found for the predefined location.");
+                  }
+                })
+                .catch((error) => {
+                  console.error("Geocoding error:", error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      } else if (searchMethod === "city") {
+        axios
+          .get(
+            `http://localhost:9090/crimeByCity?city=Phoenix&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`
+          )
+          .then((cityResponse) => {
+            const cityData = cityResponse.data;
+
+            // Extract all unique zip codes from cityData
+            const zipcodes = Array.from(
+              new Set(cityData.map((item) => item.zipcode))
+            );
+
+            // Define a function to fetch categories for zip codes
+            const fetchCategoriesForZipcodes = (zipcodes) => {
+              zipcodes.forEach((zipcode) => {
+                axios
+                  .get(
+                    `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}&&category=${category}`
+                  )
                   .then((response) => {
-                    if (!response.ok) {
-                      throw new Error("Network response was not ok");
-                    }
-                    return response.json();
-                  })
-                  .then((geocodingData) => {
-                    if (
-                      geocodingData.features &&
-                      geocodingData.features.length > 0
-                    ) {
-                      const [longitude, latitude] =
-                        geocodingData.features[0].center;
+                    const data = response.data;
+                    const matchingColorAndSize = getColorAndSize(data.count);
 
-                      const customMarkerElement = document.createElement("div");
-                      customMarkerElement.className = "custom-marker";
-                      customMarkerElement.innerHTML = `<div class="marker-content">${
-                        count || ""
-                      }</div>`;
+                    fetch(
+                      `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
+                    )
+                      .then((response) => {
+                        if (!response.ok) {
+                          throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                      })
+                      .then((geocodingData) => {
+                        if (
+                          geocodingData.features &&
+                          geocodingData.features.length > 0
+                        ) {
+                          const [longitude, latitude] =
+                            geocodingData.features[0].center;
 
-                      customMarkerElement.style.backgroundColor =
-                        matchingColorAndSize.color;
-                      customMarkerElement.style.width =
-                        matchingColorAndSize.width + "px";
-                      customMarkerElement.style.height =
-                        matchingColorAndSize.height + "px";
+                          const customMarkerElement =
+                            document.createElement("div");
+                          customMarkerElement.className = "custom-marker";
+                          customMarkerElement.innerHTML = `<div class="marker-content">${
+                            data.count || ""
+                          }</div>`;
 
-                      new mapboxgl.Marker({ element: customMarkerElement })
-                        .setLngLat([longitude, latitude])
-                        .addTo(newMap);
-                    } else {
-                      alert("No results found for the predefined location.");
-                    }
+                          customMarkerElement.style.backgroundColor =
+                            matchingColorAndSize.color;
+                          customMarkerElement.style.width =
+                            matchingColorAndSize.width + "px";
+                          customMarkerElement.style.height =
+                            matchingColorAndSize.height + "px";
+
+                          new mapboxgl.Marker({ element: customMarkerElement })
+                            .setLngLat([longitude, latitude])
+                            .addTo(newMap);
+                        } else {
+                          alert(
+                            "No results found for the predefined location."
+                          );
+                        }
+                      })
+                      .catch((error) => {
+                        console.error("Geocoding error:", error);
+                      });
                   })
                   .catch((error) => {
-                    console.error("Geocoding error:", error);
+                    console.error(error);
                   });
               });
+            };
+
+            // Check if a category is provided and fetch categories for zip codes
+            if (category) {
+              fetchCategoriesForZipcodes(zipcodes);
             }
+          })
+          .catch((cityError) => {
+            console.error(cityError);
+          });
+      } else if (searchMethod === "category" && category) {
+        baseURL = `http://localhost:9090/crimeByCategory?category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
+        axios
+          .get(baseURL)
+          .then((response) => {
+            const data = response.data;
+            console.log(data);
+            data.forEach((item) => {
+              let count = item;
+              if (item.count) {
+                count = item.count;
+              }
+
+              const { zipcode } = item;
+              const matchingColorAndSize = getColorAndSize(count);
+
+              fetch(
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
+              )
+                .then((response) => {
+                  if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                  }
+                  return response.json();
+                })
+                .then((geocodingData) => {
+                  if (
+                    geocodingData.features &&
+                    geocodingData.features.length > 0
+                  ) {
+                    const [longitude, latitude] =
+                      geocodingData.features[0].center;
+
+                    const customMarkerElement = document.createElement("div");
+                    customMarkerElement.className = "custom-marker";
+                    customMarkerElement.innerHTML = `<div class "marker-content">${
+                      count || ""
+                    }</div>`;
+
+                    customMarkerElement.style.backgroundColor =
+                      matchingColorAndSize.color;
+                    customMarkerElement.style.width =
+                      matchingColorAndSize.width + "px";
+                    customMarkerElement.style.height =
+                      matchingColorAndSize.height + "px";
+
+                    new mapboxgl.Marker({ element: customMarkerElement })
+                      .setLngLat([longitude, latitude])
+                      .addTo(newMap);
+                  } else {
+                    alert("No results found for the predefined location.");
+                  }
+                })
+                .catch((error) => {
+                  console.error("Geocoding error:", error);
+                });
+            });
           })
           .catch((error) => {
             console.error(error);
@@ -127,7 +274,8 @@ const CrimeMap = ({ submittedValue }) => {
   }, [submittedValue]);
 
   return (
-    <div><h1>Crime</h1>
+    <div>
+      <h1>Crime</h1>
       <div className="map">
         <div className="map-container" ref={mapContainerRef} />
       </div>
