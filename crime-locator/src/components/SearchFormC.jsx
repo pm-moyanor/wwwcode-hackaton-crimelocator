@@ -84,6 +84,7 @@ function SearchFormC({ setSubmittedValue }) {
           <div className="py-1 mr-3 ">
             <input
               type="radio"
+              name="searchMethod"
               id="city"
               value="city"
               checked={selectedSearchMethod === "city"}
@@ -95,14 +96,14 @@ function SearchFormC({ setSubmittedValue }) {
           <div className="py-1 mr-3 ">
             <input
               type="radio"
+              name="searchMethod"
               id="zipcode"
               value="zipcode"
               checked={selectedSearchMethod === "zipcode"}
               onChange={handleSearchMethodChange}
             />
             <label htmlFor="zipcode">Search by Zipcode</label>
-          </div>
-          {selectedSearchMethod === "zipcode" && (
+            {selectedSearchMethod === "zipcode" && (
             <div>
               <input
                 className="appearance-none border border-sky-500 bg-transparent w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
@@ -115,24 +116,53 @@ function SearchFormC({ setSubmittedValue }) {
               )}
             </div>
           )}
-        </div>
+          </div>
+          <div className="py-1 mr-3 ">
+            <input
+              type="radio"
+              name="searchMethod"
+              id="category"
+              value="category"
+              checked={selectedSearchMethod === "category"}
+              onChange={handleSearchMethodChange}
+            />
+            <label htmlFor="category">Search by Category</label>
+            <select
+              className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            >
+              <option value="">Select Category</option>
 
-        <div className=" flex flex-row justify-start border border-sky-500 py-1">
-          <label htmlFor="zipcode" className="py-1 mr-3 ">Select category</label>
-          <select
-            className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-          >
-            <option value="">Select Category</option>
+              {crimeTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
 
-            {crimeTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
         </div>
+        {selectedSearchMethod !== "category" && (
+          <div className=" flex flex-row justify-start border border-sky-500 py-1">
+            <label htmlFor="zipcode" className="py-1 mr-3 ">
+              Select category
+            </label>
+            <select
+              className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+            >
+              <option value="">Select Category</option>
+
+              {crimeTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className="flex flex-row max-w-xl justify-between py-1">
           <input
