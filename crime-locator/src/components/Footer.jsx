@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="team">
           <span className="team-subtitle">Made by:</span>
           <div className="team-members">
-            <article className="pr-10">
+            <article className="member">
               <i class="fa-brands fa-github"></i>
               <a
                 href="https://github.com/KR411-prog"
@@ -19,7 +19,7 @@ const Footer = () => {
               </a>
             </article>
 
-            <article className="pr-10">
+            <article className="member">
               <i class="fa-brands fa-github"></i>
               <a
                 href="https://github.com/pm-moyanor"

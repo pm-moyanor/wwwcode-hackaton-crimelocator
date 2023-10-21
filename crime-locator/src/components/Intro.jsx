@@ -9,7 +9,7 @@ const Intro = () => {
           className="overlay flex flex-col items-center justify-center"
           id="intro"
         >
-          <div className="container mx-auto xl:px-40 sm:px-20 mt-10 mb-10 flex flex-col items-center justify-center">
+          <div className="container mx-auto mt-10 mb-10 flex flex-col items-center justify-center">
             <h1 className="title mb-5">Why a Crime Locator?</h1>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti

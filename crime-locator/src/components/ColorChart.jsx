@@ -4,7 +4,7 @@ import React from "react";
 
 const ColorChart = ({}) => {
   return (
-    <div className="flex flex-col border border-cyan-900 w-36 chart">
+    <div className="flex flex-col w-36 chart">
       {totalCountColors.map((item, index) => (
         <div
           key={index}

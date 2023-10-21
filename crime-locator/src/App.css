@@ -39,6 +39,11 @@ header {
   background-size: auto;
 }
 
+.intro p {
+  width: 60%;
+  line-height: 30px;
+}
+
 .overlay {
   position: absolute;
   height: inherit;
@@ -92,8 +97,25 @@ footer {
   text-decoration: underline;
 }
 
+.member {
+  padding-right: 30px;
+}
+
 .fa-github:before {
   font-size: 1.5rem;
+}
+
+@media screen and (max-width: 1440px) {
+  .intro p {
+    width: 70%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .intro p {
+    padding: 0 4rem;
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 991px) {
@@ -107,5 +129,33 @@ footer {
 
   nav {
     display: none !important;
+  }
+
+  .intro p {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .intro p {
+    padding: 0 2rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .team-members {
+    flex-direction: column;
+  }
+
+  .member {
+    padding-right: 0;
+  }
+
+  .intro {
+    height: 700px;
+  }
+
+  .overlay {
+    padding-top: 100px;
   }
 }
