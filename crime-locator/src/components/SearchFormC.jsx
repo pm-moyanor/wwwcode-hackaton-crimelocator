@@ -92,7 +92,7 @@ function SearchFormC({ setSubmittedValue }) {
             <label htmlFor="city">Search all Phoenix</label>
           </div>
 
-          <div className="py-1 mr-3 ">
+          <div className="zipcode py-1 mr-3 ">
             <input
               type="radio"
               name="searchMethod"
@@ -116,7 +116,7 @@ function SearchFormC({ setSubmittedValue }) {
               </div>
             )}
           </div>
-          <div className="py-1 mr-3 ">
+          <div className="py-1 mr-3 category">
             <input
               type="radio"
               name="searchMethod"
@@ -153,7 +153,7 @@ function SearchFormC({ setSubmittedValue }) {
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
-              <option value="">Select Category</option>
+              <option value="">Select Category </option>
 
               {crimeTypes.map((type) => (
                 <option key={type} value={type}>
@@ -190,7 +190,7 @@ function SearchFormC({ setSubmittedValue }) {
         </div>
 
         <button
-          className="flex-shrink-0 bg-blue-800 hover:bg-blue-500 border-blue-800 hover:border-blue-500 text-sm border-4 text-white py-1 px-2"
+          className="flex-shrink-0 bg-black text-sm border-4 text-white py-1 px-2"
           type="submit"
         >
           Search
