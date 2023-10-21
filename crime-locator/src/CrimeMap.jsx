@@ -16,9 +16,8 @@ function getColorAndSize(totalCount) {
   if (matchingColorAndSize) {
     return matchingColorAndSize;
   } else {
-    console.log(`Color for ${totalCount}: gray`);
-    // If no match found, return a default color and size, replace with error handling
-    return { color: "gray", width: 30, height: 30 };
+    console.log(`Color for  0 - ${totalCount}: gray`);
+  
   }
 }
 
