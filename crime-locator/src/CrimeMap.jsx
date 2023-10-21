@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import "./CrimeMap.css";
-import { totalCountColors } from "../colors"; 
+import { totalCountColors } from "../colors";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicG1tb3lhbm9yIiwiYSI6ImNsbnVrZzN5bjBkOHkybHFqYXNzb3IxcjUifQ.99b7wHbQY6pShWHiVCNZnA";
@@ -17,7 +17,6 @@ function getColorAndSize(totalCount) {
     return matchingColorAndSize;
   } else {
     console.log(`Color for  0 - ${totalCount}: gray`);
-  
   }
 }
 
@@ -25,13 +24,14 @@ const CrimeMap = ({ submittedValue }) => {
   const mapContainerRef = useRef(null); // Save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
+  const [totalCountLeyend, setTotalCountLeyend] = useState("count");
 
   useEffect(() => {
     const newMap = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [-112.079417, 33.448271],
-      zoom: 12,
+      center: [-112.105187, 33.631281],
+      zoom: 8,
       maxZoom: 20,
     });
 
@@ -39,8 +39,8 @@ const CrimeMap = ({ submittedValue }) => {
       setMap(newMap);
 
       const phoenixBounds = [
-        [-112.3411, 33.3062],
-        [-111.8652, 33.7873],
+        [-112.4361, 33.2772], // Southwest corner
+        [-111.7702, 33.8733], // Northeast corner
       ];
 
       newMap.setMaxBounds(phoenixBounds);
@@ -69,7 +69,7 @@ const CrimeMap = ({ submittedValue }) => {
           .get(baseURL)
           .then((response) => {
             const data = response.data;
-            console.log(data);
+           
             if (data.count) {
               let count = data.count;
 
@@ -134,8 +134,7 @@ const CrimeMap = ({ submittedValue }) => {
             const zipcodes = Array.from(
               new Set(cityData.map((item) => item.zipcode))
             );
-           
-          
+
             const fetchCategoriesForZipcodes = (zipcodes) => {
               zipcodes.forEach((zipcode) => {
                 axios
@@ -144,8 +143,10 @@ const CrimeMap = ({ submittedValue }) => {
                   )
                   .then((response) => {
                     const data = response.data;
-                    console.log(data.count)
-                    const matchingColorAndSize = data.count !== 0 && getColorAndSize(data.count);
+                  
+
+                    const matchingColorAndSize =
+                      data.count !== 0 && getColorAndSize(data.count);
 
                     fetch(
                       `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
@@ -197,8 +198,7 @@ const CrimeMap = ({ submittedValue }) => {
               });
             };
 
-              fetchCategoriesForZipcodes(zipcodes);
-         
+            fetchCategoriesForZipcodes(zipcodes);
           })
           .catch((cityError) => {
             console.error(cityError);
@@ -209,7 +209,7 @@ const CrimeMap = ({ submittedValue }) => {
           .get(baseURL)
           .then((response) => {
             const data = response.data;
-            console.log(data);
+      
             data.forEach((item) => {
               let count = item;
               if (item.count) {
@@ -272,7 +272,7 @@ const CrimeMap = ({ submittedValue }) => {
 
   return (
     <div>
-      <h1>Crime</h1>
+     
       <div className="map">
         <div className="map-container" ref={mapContainerRef} />
       </div>
