@@ -26,7 +26,7 @@ function App() {
         setSubmittedValue={setSubmittedValue}
       /> */}
       <CrimeMap submittedValue={submittedValue} />
-      <ColorChart/>
+
       <Footer />
     </div>
   );

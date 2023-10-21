@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
+import ColorChart from "./components/ColorChart";
 import "./CrimeMap.css";
 import { totalCountColors } from "../colors";
 
@@ -271,11 +272,12 @@ const CrimeMap = ({ submittedValue }) => {
   }, [submittedValue]);
 
   return (
-    <div>
+    <div className="relative ">
      
       <div className="map">
         <div className="map-container" ref={mapContainerRef} />
       </div>
+      <ColorChart/>
     </div>
   );
 };
