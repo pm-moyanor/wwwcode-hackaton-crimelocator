@@ -25,6 +25,10 @@ header {
   overflow: hidden;
 }
 
+.main-title {
+  font-size: 3rem;
+}
+
 .title {
   font-size: 1.5rem;
 }
@@ -52,7 +56,7 @@ header {
   right: 0;
   left: 0;
   padding: 3rem 0;
-  background-color: rgba(0, 0, 0, 0.92);
+  background-color: rgba(0, 0, 0, 0.918);
 }
 
 .search-box {
@@ -69,6 +73,11 @@ header {
   display: none;
 }
 
+.chart {
+  display: flex;
+  justify-content: flex-end;
+}
+
 footer {
   background-color: rgb(2, 17, 32);
   display: flex;
@@ -76,6 +85,7 @@ footer {
   align-items: center;
   height: 100%;
   padding: 5rem 0 6rem 0;
+  margin: 2rem 0 0 0;
   font-size: 17px;
 }
 
@@ -149,6 +159,7 @@ footer {
 
   .member {
     padding-right: 0;
+    margin-bottom: 12px;
   }
 
   .intro {

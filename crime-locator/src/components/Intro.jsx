@@ -10,7 +10,7 @@ const Intro = () => {
           id="intro"
         >
           <div className="container mx-auto mt-10 mb-10 flex flex-col items-center justify-center">
-            <h1 className="title mb-5">Why a Crime Locator?</h1>
+            <h1 className="main-title mb-5">Why a Crime Locator?</h1>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corrupti
               mollitia consectetur laborum quos, consequuntur sunt ducimus

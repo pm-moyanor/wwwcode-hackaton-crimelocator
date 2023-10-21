@@ -6,7 +6,6 @@
   right: 0;
   width: 100%;
   height: 800px;
-  margin: 0 1rem;
 }
 
 .sidebarStyle {
@@ -28,10 +27,4 @@
   justify-content: center;
   align-items: center;
   color: whit;
-}
-
-@media screen and (max-width: 768px) {
-  .map-container {
-    margin: 0;
-  }
 }
