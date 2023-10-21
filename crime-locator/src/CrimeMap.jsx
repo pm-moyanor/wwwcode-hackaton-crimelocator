@@ -33,7 +33,7 @@ const CrimeMap = ({ submittedValue }) => {
       style: "mapbox://styles/mapbox/streets-v11",
       center: [-112.079417, 33.448271],
       zoom: 12,
-      maxZoom: 16,
+      maxZoom: 20,
     });
 
     newMap.on("load", () => {
@@ -135,8 +135,8 @@ const CrimeMap = ({ submittedValue }) => {
             const zipcodes = Array.from(
               new Set(cityData.map((item) => item.zipcode))
             );
-
-            // function to fetch categories for zip codes
+           
+          
             const fetchCategoriesForZipcodes = (zipcodes) => {
               zipcodes.forEach((zipcode) => {
                 axios
@@ -145,7 +145,8 @@ const CrimeMap = ({ submittedValue }) => {
                   )
                   .then((response) => {
                     const data = response.data;
-                    const matchingColorAndSize = getColorAndSize(data.count);
+                    console.log(data.count)
+                    const matchingColorAndSize = data.count !== 0 && getColorAndSize(data.count);
 
                     fetch(
                       `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
@@ -197,10 +198,8 @@ const CrimeMap = ({ submittedValue }) => {
               });
             };
 
-            // Check if a category is provided and fetch categories for zipcodes
-            if (category) {
               fetchCategoriesForZipcodes(zipcodes);
-            }
+         
           })
           .catch((cityError) => {
             console.error(cityError);
