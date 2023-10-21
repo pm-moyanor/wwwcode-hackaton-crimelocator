@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div className="header-box">
       <header className="bg-white">
-        <div className="container box justify-between lg:justify-center flex flex-row items-center p-6">
+        <div className="container box justify-between lg:justify-center flex flex-row items-center p-6 md:p-0">
           <div>
             <img
               src="../src/assets/logo-crime-locator.png"

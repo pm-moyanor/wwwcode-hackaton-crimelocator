@@ -30,8 +30,9 @@ header {
 }
 
 .intro {
+  padding-top: 100px;
   position: relative;
-  height: 500px;
+  height: 600px;
   padding: 3rem 0;
   background-image: url("./assets/map-locator.jpg");
   background-repeat: no-repeat;
@@ -46,7 +47,7 @@ header {
   right: 0;
   left: 0;
   padding: 3rem 0;
-  background-color: rgba(0, 0, 0, 0.734);
+  background-color: rgba(0, 0, 0, 0.92);
 }
 
 .search-box {
@@ -59,6 +60,10 @@ header {
   width: auto;
 }
 
+.mapboxgl-ctrl-attrib-inner {
+  display: none;
+}
+
 footer {
   background-color: rgb(2, 17, 32);
   display: flex;
@@ -66,7 +71,7 @@ footer {
   align-items: center;
   height: 100%;
   padding: 5rem 0 6rem 0;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 .team {
@@ -91,10 +96,6 @@ footer {
   font-size: 1.5rem;
 }
 
-/* @media screen and (max-width: 1200px) {
-
-} */
-
 @media screen and (max-width: 991px) {
   .box {
     justify-content: center !important;
@@ -108,7 +109,3 @@ footer {
     display: none !important;
   }
 }
-
-/* @media screen and (max-width: 576px) {
-
-} */
