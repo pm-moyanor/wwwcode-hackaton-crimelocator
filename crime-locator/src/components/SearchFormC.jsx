@@ -47,6 +47,9 @@ function SearchFormC({ setSubmittedValue }) {
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = "Start and End date are required";
     }
+    if (selectedSearchMethod === "category" && !selectedCategory) {
+      newErrors.category = "Select a category";
+    }
 
     setErrors(newErrors);
 
@@ -63,7 +66,7 @@ function SearchFormC({ setSubmittedValue }) {
         zipcode: selectedSearchMethod === "zipcode" ? inputValue : null,
         city: selectedSearchMethod === "city" ? "city" : null,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
-        category: selectedCategory,
+        category: selectedSearchMethod === "category" ? selectedCategory : null,
       });
 
       setInputValue("");
@@ -141,6 +144,12 @@ function SearchFormC({ setSubmittedValue }) {
                 ))}
               </select>
             )}
+            <>
+              {" "}
+              {errors.category && (
+                <p className="text-red-500 text-sm">{errors.category}</p>
+              )}
+            </>
           </div>
         </div>
         {selectedSearchMethod !== "category" && (
