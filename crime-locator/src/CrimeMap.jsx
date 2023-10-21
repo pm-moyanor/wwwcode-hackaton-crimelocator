@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import "./CrimeMap.css";
-import { totalCountColors, categoryColors } from "../colors"; // Import both arrays
+import { totalCountColors } from "../colors"; 
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoicG1tb3lhbm9yIiwiYSI6ImNsbnVrZzN5bjBkOHkybHFqYXNzb3IxcjUifQ.99b7wHbQY6pShWHiVCNZnA";

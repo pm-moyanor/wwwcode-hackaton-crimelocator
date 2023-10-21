@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const crimeTypes = [
-  "all types",
   "theft",
   "burglary",
   "assault",
@@ -48,9 +47,6 @@ function SearchFormC({ setSubmittedValue }) {
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = "Start and End date are required";
     }
-    // if (selectedSearchMethod === "city" && !selectedCategory) {
-    //   newErrors.category = "Category is required when searching by city";
-    // }
 
     setErrors(newErrors);
 
@@ -65,7 +61,7 @@ function SearchFormC({ setSubmittedValue }) {
       setSubmittedValue({
         searchMethod: selectedSearchMethod,
         zipcode: selectedSearchMethod === "zipcode" ? inputValue : null,
-        city: selectedSearchMethod === "city" ? "city": null,
+        city: selectedSearchMethod === "city" ? "city" : null,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
         category: selectedCategory,
       });
@@ -79,7 +75,10 @@ function SearchFormC({ setSubmittedValue }) {
 
   return (
     <div className="search-box m-auto" id="map">
-      <form className="flex flex-col items-center justify-center" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col items-center justify-center"
+        onSubmit={handleSubmit}
+      >
         <div className="flex flex-row py-1">
           <div className="py-1 mr-3 ">
             <input
@@ -104,18 +103,18 @@ function SearchFormC({ setSubmittedValue }) {
             />
             <label htmlFor="zipcode">Search by Zipcode</label>
             {selectedSearchMethod === "zipcode" && (
-            <div>
-              <input
-                className="appearance-none border border-sky-500 bg-transparent w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-                type="text"
-                value={inputValue}
-                onChange={handleInputChange}
-              />
-              {errors.zipcode && (
-                <p className="text-red-500 text-sm">{errors.zipcode}</p>
-              )}
-            </div>
-          )}
+              <div>
+                <input
+                  className="appearance-none border border-sky-500 bg-transparent w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  type="text"
+                  value={inputValue}
+                  onChange={handleInputChange}
+                />
+                {errors.zipcode && (
+                  <p className="text-red-500 text-sm">{errors.zipcode}</p>
+                )}
+              </div>
+            )}
           </div>
           <div className="py-1 mr-3 ">
             <input
@@ -128,22 +127,21 @@ function SearchFormC({ setSubmittedValue }) {
             />
             <label htmlFor="category">Search by Category</label>
             {selectedSearchMethod === "category" && (
-            <select
-              className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-            >
-              <option value="">Select Category</option>
+              <select
+                className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+              >
+                <option value="">Select Category</option>
 
-              {crimeTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
+                {crimeTypes.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
             )}
           </div>
-
         </div>
         {selectedSearchMethod !== "category" && (
           <div className=" flex flex-row justify-start border border-sky-500 py-1">
