@@ -31,7 +31,7 @@ const CrimeMap = ({ submittedValue }) => {
     const newMap = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: [-112.105187, 33.631281],
+      center : [-112.1037885, 33.5050505],
       zoom: 8,
       maxZoom: 20,
     });
@@ -40,8 +40,8 @@ const CrimeMap = ({ submittedValue }) => {
       setMap(newMap);
 
       const phoenixBounds = [
-        [-112.4361, 33.2772], // Southwest corner
-        [-111.7702, 33.8733], // Northeast corner
+        [-113.207167, 32.791773], // Southwest corner 
+        [-111.00041, 34.218328],  // Northeast corner 
       ];
 
       newMap.setMaxBounds(phoenixBounds);
