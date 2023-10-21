@@ -150,6 +150,10 @@ footer {
   .intro p {
     padding: 0 2rem;
   }
+
+  .main-title {
+    font-size: 2.3rem;
+  }
 }
 
 @media screen and (max-width: 550px) {
