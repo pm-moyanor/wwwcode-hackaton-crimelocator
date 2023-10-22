@@ -17,13 +17,12 @@ function getColorAndSize(totalCount) {
     return matchingColorAndSize;
   } else {
     console.log(`Color for ${totalCount}: gray`);
-    // If no match found, return a default color and size, replace with error handling
     return { color: "gray", width: 30, height: 30 };
   }
 }
 
 const CrimeMap = ({ submittedValue }) => {
-  console.log(submittedValue);
+
   const mapContainerRef = useRef(null); // Save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
@@ -41,8 +40,8 @@ const CrimeMap = ({ submittedValue }) => {
       setMap(newMap);
 
       const phoenixBounds = [
-        [-112.3411, 33.3062],
-        [-111.8652, 33.7873],
+        [-113.5, 32.8], // Southwest corner
+        [-111.0, 34.2], // Northeast corner
       ];
 
       newMap.setMaxBounds(phoenixBounds);
@@ -61,6 +60,7 @@ const CrimeMap = ({ submittedValue }) => {
       let baseURL = "";
 
       if (searchMethod === "zipcode" && zipcode) {
+  
         if (!category) {
           // If category is empty, exclude it from the URL
           baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
@@ -75,7 +75,7 @@ const CrimeMap = ({ submittedValue }) => {
 
             if (data.count) {
               let count = data.count;
-
+     
               const matchingColorAndSize = getColorAndSize(count);
 
               fetch(
@@ -95,7 +95,7 @@ const CrimeMap = ({ submittedValue }) => {
                   ) {
                     const [longitude, latitude] =
                       geocodingData.features[0].center;
-
+               
                     const customMarkerElement = document.createElement("div");
                     customMarkerElement.className = "custom-marker";
                 
@@ -129,14 +129,13 @@ const CrimeMap = ({ submittedValue }) => {
             console.error(error);
           });
       } else if (searchMethod === "city") {
-        console.log(category);
+  
         axios
           .get(
             `http://localhost:9090/crimeByCity?city=Phoenix&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`
           )
           .then((cityResponse) => {
             const cityData = cityResponse.data;
-            console.log(cityData);
 
             // Extract all unique zip codes fro cityData
             const zipcodes = Array.from(
@@ -176,9 +175,7 @@ const CrimeMap = ({ submittedValue }) => {
                           const customMarkerElement =
                             document.createElement("div");
                           customMarkerElement.className = "custom-marker";
-                          customMarkerElement.innerHTML = `<div>${
-                            data.count || ""
-                          }</div>`;
+                          customMarkerElement.innerHTML = `<div>${data.count || ""}</div>`;
 
                           customMarkerElement.style.backgroundColor =
                             matchingColorAndSize.color;
@@ -217,7 +214,7 @@ const CrimeMap = ({ submittedValue }) => {
           .get(baseURL)
           .then((response) => {
             const data = response.data;
-            console.log(data);
+    
             data.forEach((item) => {
               let count = item;
 
@@ -245,7 +242,7 @@ const CrimeMap = ({ submittedValue }) => {
                   ) {
                     const [longitude, latitude] =
                       geocodingData.features[0].center;
-
+          
                     const customMarkerElement = document.createElement("div");
                     customMarkerElement.className = "custom-marker";
                     customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
@@ -280,9 +277,6 @@ const CrimeMap = ({ submittedValue }) => {
 
   return (
     <div>
-      <h1>Crime rate</h1>
-    
-    
       <div className="map">
         <div className="map-container" ref={mapContainerRef} />
       </div>

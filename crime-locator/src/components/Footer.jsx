@@ -9,7 +9,7 @@ const Footer = () => {
           <span className="team-subtitle">Made by:</span>
           <div className="team-members">
             <article className="member">
-              <i class="fa-brands fa-github"></i>
+              <i className="fa-brands fa-github"></i>
               <a
                 href="https://github.com/KR411-prog"
                 target="_blank"
@@ -20,7 +20,7 @@ const Footer = () => {
             </article>
 
             <article className="member">
-              <i class="fa-brands fa-github"></i>
+              <i className="fa-brands fa-github"></i>
               <a
                 href="https://github.com/pm-moyanor"
                 target="_blank"
@@ -31,7 +31,7 @@ const Footer = () => {
             </article>
 
             <article>
-              <i class="fa-brands fa-github"></i>
+              <i className="fa-brands fa-github"></i>
               <a
                 href="https://www.github.com/Shinnmar"
                 target="_blank"
