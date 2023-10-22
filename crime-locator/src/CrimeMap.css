@@ -8,6 +8,10 @@
   height: 800px;
 }
 
+.map-container .mapboxgl-ctrl-bottom-left {
+  display: none;
+}
+
 .sidebarStyle {
   display: inline-block;
   position: absolute;
