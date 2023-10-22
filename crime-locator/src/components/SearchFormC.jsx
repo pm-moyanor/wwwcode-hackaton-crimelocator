@@ -42,13 +42,13 @@ function SearchFormC({ setSubmittedValue }) {
   const validateInputs = () => {
     const newErrors = {};
     if (selectedSearchMethod === "zipcode" && !inputValue) {
-      newErrors.zipcode = "Zipcode is required";
+      newErrors.zipcode = " *Zipcode is required";
     }
     if (!selectedStartDate || !selectedEndDate) {
-      newErrors.date = "Start and End date are required";
+      newErrors.date = " *Start and End date are required";
     }
     if (selectedSearchMethod === "category" && !selectedCategory) {
-      newErrors.category = "Select a category";
+      newErrors.category = " *Category is required";
     }
 
     setErrors(newErrors);
@@ -82,8 +82,8 @@ function SearchFormC({ setSubmittedValue }) {
         className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-row py-1">
-          <div className="py-1 mr-3 ">
+        <div className="flex flex-row justify-between py-1 items-center filters-mob">
+          <div className="city py-1 mr-3 ">
             <input
               type="radio"
               name="searchMethod"
@@ -92,7 +92,7 @@ function SearchFormC({ setSubmittedValue }) {
               checked={selectedSearchMethod === "city"}
               onChange={handleSearchMethodChange}
             />
-            <label htmlFor="city">Search all Phoenix</label>
+            <label htmlFor="city">Search by City</label>
           </div>
 
           <div className="zipcode py-1 mr-3 ">
@@ -108,13 +108,14 @@ function SearchFormC({ setSubmittedValue }) {
             {selectedSearchMethod === "zipcode" && (
               <div>
                 <input
-                  className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none input-zipcode"
                   type="text"
                   value={inputValue}
                   onChange={handleInputChange}
+                  placeholder="enter a Zipcode"
                 />
                 {errors.zipcode && (
-                  <p className="text-red-500 text-sm">{errors.zipcode}</p>
+                  <p className="text-red-500 flex items-center text-sm required">{errors.zipcode}</p>
                 )}
               </div>
             )}
@@ -131,11 +132,11 @@ function SearchFormC({ setSubmittedValue }) {
             <label htmlFor="category">Search by Category</label>
             {selectedSearchMethod === "category" && (
               <select
-                className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
+                className="appearance-none bg-white text-gray-500 py-1 mr-3 leading-tight focus:outline-none select-category"
                 value={selectedCategory}
                 onChange={handleCategoryChange}
               >
-                <option value="">Select Category</option>
+                <option value="" className="option-category">Select Category</option>
 
                 {crimeTypes.map((type) => (
                   <option key={type} value={type}>
@@ -147,18 +148,18 @@ function SearchFormC({ setSubmittedValue }) {
             <>
               {" "}
               {errors.category && (
-                <p className="text-red-500 text-sm">{errors.category}</p>
+                <p className="text-red-500 flex items-center required text-sm">{errors.category}</p>
               )}
             </>
           </div>
         </div>
         {selectedSearchMethod !== "category" && (
-          <div className=" flex flex-row justify-start border border-sky-500 py-1">
-            <label htmlFor="zipcode" className="py-1 mr-3 ">
+          <div className=" flex flex-row justify-start py-1">
+            {/* <label htmlFor="zipcode" className="py-1 mr-3 ">
               Select category
-            </label>
+            </label> */}
             <select
-              className="appearance-none bg-transparent text-gray-500 py-1 mr-3 leading-tight focus:outline-none border border-sky-500"
+              className="appearance-none bg-white text-gray-500 py-1 mr-3 leading-tight focus:outline-none"
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
@@ -173,9 +174,9 @@ function SearchFormC({ setSubmittedValue }) {
           </div>
         )}
 
-        <div className="flex flex-row max-w-xl justify-between py-1">
+        <div className="flex flex-row max-w-xl justify-between py-1  mb-5 mt-5">
           <input
-            className="appearance-none bg-transparent text-gray-500 w-36 py-1 leading-tight focus:outline-none"
+            className="appearance-none bg-white text-gray-500 w-36 py-1 leading-tight focus:outline-none"
             type="date"
             id="start"
             value={selectedStartDate}
@@ -183,12 +184,12 @@ function SearchFormC({ setSubmittedValue }) {
             min="2010-01-01"
             max="2023-10-18"
           />
-          {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
+          {errors.date && <p className="text-red-500 required flex items-center text-sm">{errors.date}</p>}
 
-          <span className="align-middle mx-6 text-gray-500 mt-0.5 ">to</span>
+          <span className="align-middle mx-6 text-gray-500 mt-0.5 flex items-center">to</span>
 
           <input
-            className="appearance-none bg-transparent text-gray-500 w-36 py-1 leading-tight focus:outline-none"
+            className="appearance-none bg-white text-gray-500 w-36 py-1 leading-tight focus:outline-none"
             type="date"
             id="end"
             value={selectedEndDate}
@@ -199,7 +200,7 @@ function SearchFormC({ setSubmittedValue }) {
         </div>
 
         <button
-          className="flex-shrink-0 bg-black text-sm border-4 text-white py-1 px-2"
+          className="flex-shrink-0 bg-black text-white btn-black"
           type="submit"
         >
           Search
