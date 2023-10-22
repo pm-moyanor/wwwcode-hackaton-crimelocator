@@ -13,16 +13,20 @@ const crimeTypes = [
 function SearchFormC({ setSubmittedValue }) {
   const [selectedSearchMethod, setSelectedSearchMethod] = useState("zipcode");
 
-  const [inputValue, setInputValue] = useState("");
+  const [zipcodeInputValue, setZipcodeInputValue] = useState("");
+  const [cityInputValue, setCityInputValue] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e) => {
-    setInputValue(e.target.value);
+  const handleZipcodeInputChange = (e) => {
+    setZipcodeInputValue(e.target.value);
   };
 
+  const handleCityInputChange = (e) => {
+    setCityInputValue(e.target.value);
+  };
   const handleSearchMethodChange = (e) => {
     setSelectedSearchMethod(e.target.value);
   };
@@ -41,8 +45,11 @@ function SearchFormC({ setSubmittedValue }) {
 
   const validateInputs = () => {
     const newErrors = {};
-    if (selectedSearchMethod === "zipcode" && !inputValue) {
+    if (selectedSearchMethod === "zipcode" && !zipcodeInputValue) {
       newErrors.zipcode = " *Zipcode is required";
+    }
+    if (selectedSearchMethod === "city" && !cityInputValue) {
+      newErrors.city = " *City is required";
     }
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = " *Start and End date are required";
@@ -63,8 +70,8 @@ function SearchFormC({ setSubmittedValue }) {
     if (isFormValid) {
       setSubmittedValue({
         searchMethod: selectedSearchMethod,
-        zipcode: selectedSearchMethod === "zipcode" ? inputValue : null,
-        city: selectedSearchMethod === "city" ? "city" : null,
+        zipcode: selectedSearchMethod === "zipcode" ? zipcodeInputValue : null,
+        city: selectedSearchMethod === "city" ? "cityInputValue" : null,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
         category: selectedCategory
       });
@@ -80,16 +87,29 @@ function SearchFormC({ setSubmittedValue }) {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col justify-between py-1 items-center filters-mob">
-          <div className="city py-1 mr-3 ">
+          <div className="zipcode py-1 mr-3 ">
             <input
               type="radio"
               name="searchMethod"
               id="city"
               value="city"
-              checked={selectedSearchMethod === "city"}
               onChange={handleSearchMethodChange}
             />
             <label htmlFor="city">Search by City</label>
+            {selectedSearchMethod === "city" && (
+              <div>
+                <input
+                  className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none input-zipcode"
+                  type="text"
+                  value={cityInputValue}
+                  onChange={handleCityInputChange}
+                  placeholder="enter a City"
+                />
+                {errors.city && (
+                  <p className="text-red-500 flex items-center text-sm required">{errors.city}</p>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="zipcode py-1 mr-3 ">
@@ -107,8 +127,8 @@ function SearchFormC({ setSubmittedValue }) {
                 <input
                   className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none input-zipcode"
                   type="text"
-                  value={inputValue}
-                  onChange={handleInputChange}
+                  value={zipcodeInputValue}
+                  onChange={handleZipcodeInputChange}
                   placeholder="enter a Zipcode"
                 />
                 {errors.zipcode && (
@@ -117,6 +137,8 @@ function SearchFormC({ setSubmittedValue }) {
               </div>
             )}
           </div>
+
+
           <div className="py-1 mr-3 category">
             <input
               type="radio"
@@ -133,7 +155,7 @@ function SearchFormC({ setSubmittedValue }) {
                 value={selectedCategory}
                 onChange={handleCategoryChange}
               >
-                <option value="" className="option-category">Select Category</option>
+                <option value="" className="option-category">All Categories</option>
 
                 {crimeTypes.map((type) => (
                   <option key={type} value={type}>
@@ -160,7 +182,7 @@ function SearchFormC({ setSubmittedValue }) {
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
-              <option value="">Select Category</option>
+              <option value="">All Categories</option>
 
               {crimeTypes.map((type) => (
                 <option key={type} value={type}>
