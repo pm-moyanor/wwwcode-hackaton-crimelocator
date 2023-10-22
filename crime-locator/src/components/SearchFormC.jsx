@@ -80,7 +80,7 @@ function SearchFormC({ setSubmittedValue }) {
         className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-row justify-between py-1 items-center filters-mob">
+        <div className="flex flex-col justify-between py-1 items-center filters-mob">
           <div className="city py-1 mr-3 ">
             <input
               type="radio"
