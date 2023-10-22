@@ -92,7 +92,7 @@ header {
 }
 
 .btn-black:hover {
-  background-color: rgba(34, 34, 34, 0.83);
+  background-color: rgba(34, 34, 34, 0.817);
 }
 
 .select-category, .input-zipcode, .option-category, select, #start, #end {
@@ -198,7 +198,7 @@ footer {
   }
 
   .intro {
-    height: 850px;
+    height: 750px;
   }
 
   .main-title {

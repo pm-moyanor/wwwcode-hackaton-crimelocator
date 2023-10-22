@@ -8,7 +8,7 @@ const Header = () => {
         <div className="container box justify-between lg:justify-center flex flex-row items-center p-6 md:p-0">
           <div>
             <img
-              src="../src/assets/logo-crime-locator.png"
+              src="../src/assets/logo-crimemap-pro.png"
               alt="Crime Locator logo"
             />
           </div>
