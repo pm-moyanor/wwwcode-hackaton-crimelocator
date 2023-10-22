@@ -9,7 +9,7 @@ const Header = () => {
           <div>
             <img
               src="../src/assets/logo-crimemap-pro.png"
-              alt="Crime Locator logo"
+              alt="CrimeMap Pro logo"
             />
           </div>
           <nav className="nav flex flex-wrap items-center justify-center pl-24 text-base md:ml-auto">
