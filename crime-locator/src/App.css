@@ -96,7 +96,7 @@ header {
 }
 
 .select-category, .input-zipcode, .option-category, select, #start, #end {
-  padding: 0.5rem 0.8rem !important;
+  padding: 0.5rem 0.9rem !important;
   border-radius: 6px !important;
 }
 
