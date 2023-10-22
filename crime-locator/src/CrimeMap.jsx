@@ -5,7 +5,6 @@ import ColorChart from "./components/ColorChart";
 import "./CrimeMap.css";
 import { totalCountColors } from "../colors";
 
-
 mapboxgl.accessToken =
   "pk.eyJ1IjoicG1tb3lhbm9yIiwiYSI6ImNsbnVrZzN5bjBkOHkybHFqYXNzb3IxcjUifQ.99b7wHbQY6pShWHiVCNZnA";
 
@@ -26,7 +25,6 @@ function getColorAndSize(totalCount) {
 const CrimeMap = ({ submittedValue }) => {
   const mapContainerRef = useRef(null); // Save map container
   const [map, setMap] = useState(null);
-  
 
   useEffect(() => {
     const newMap = new mapboxgl.Map({
@@ -101,7 +99,27 @@ const CrimeMap = ({ submittedValue }) => {
                     const customMarkerElement = document.createElement("div");
                     customMarkerElement.className = "custom-marker";
 
-                    customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
+                    customMarkerElement.innerHTML = `<div>${
+                      count || ""
+                    }</div>`;
+
+                    customMarkerElement.addEventListener(
+                      "mouseenter",
+                      function () {
+                        customMarkerElement.innerHTML = `<div>${
+                          zipcode || ""
+                        }</div>`;
+                      }
+                    );
+
+                    customMarkerElement.addEventListener(
+                      "mouseleave",
+                      function () {
+                        customMarkerElement.innerHTML = `<div>${
+                          count || ""
+                        }</div>`;
+                      }
+                    );
 
                     customMarkerElement.style.backgroundColor =
                       matchingColorAndSize.color;
@@ -123,8 +141,7 @@ const CrimeMap = ({ submittedValue }) => {
                 .catch((error) => {
                   console.error("Geocoding error:", error);
                 });
-            }
-            else{
+            } else {
               alert("No crimes found for the selected criteria.");
             }
           })
@@ -152,7 +169,7 @@ const CrimeMap = ({ submittedValue }) => {
                   )
                   .then((response) => {
                     const data = response.data;
-
+                    const count = data.count;
                     const matchingColorAndSize =
                       data.count !== 0 && getColorAndSize(data.count);
 
@@ -176,9 +193,6 @@ const CrimeMap = ({ submittedValue }) => {
                           const customMarkerElement =
                             document.createElement("div");
                           customMarkerElement.className = "custom-marker";
-                          customMarkerElement.innerHTML = `<div>${
-                            data.count || ""
-                          }</div>`;
 
                           customMarkerElement.style.backgroundColor =
                             matchingColorAndSize.color;
@@ -186,6 +200,28 @@ const CrimeMap = ({ submittedValue }) => {
                             matchingColorAndSize.width + "px";
                           customMarkerElement.style.height =
                             matchingColorAndSize.height + "px";
+
+                          customMarkerElement.innerHTML = `<div>${
+                            count || ""
+                          }</div>`;
+
+                          customMarkerElement.addEventListener(
+                            "mouseenter",
+                            function () {
+                              customMarkerElement.innerHTML = `<div>${
+                                zipcode || ""
+                              }</div>`;
+                            }
+                          );
+
+                          customMarkerElement.addEventListener(
+                            "mouseleave",
+                            function () {
+                              customMarkerElement.innerHTML = `<div>${
+                                count || ""
+                              }</div>`;
+                            }
+                          );
 
                           new mapboxgl.Marker({ element: customMarkerElement })
                             .setLngLat([longitude, latitude])
@@ -248,7 +284,26 @@ const CrimeMap = ({ submittedValue }) => {
 
                     const customMarkerElement = document.createElement("div");
                     customMarkerElement.className = "custom-marker";
+
                     customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
+
+                    customMarkerElement.addEventListener(
+                      "mouseenter",
+                      function () {
+                        customMarkerElement.innerHTML = `<div>${
+                          zipcode || ""
+                        }</div>`;
+                      }
+                    );
+
+                    customMarkerElement.addEventListener(
+                      "mouseleave",
+                      function () {
+                        customMarkerElement.innerHTML = `<div>${
+                          count || ""
+                        }</div>`;
+                      }
+                    );
 
                     customMarkerElement.style.backgroundColor =
                       matchingColorAndSize.color;
