@@ -70,10 +70,7 @@ function SearchFormC({ setSubmittedValue }) {
         category: selectedCategory
       });
 
-      setInputValue("");
-      setSelectedStartDate("");
-      setSelectedEndDate("");
-      setSelectedCategory("");
+   
     }
   };
 
