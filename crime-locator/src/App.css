@@ -91,6 +91,10 @@ header {
   font-size: 1rem;
 }
 
+.btn-black:hover {
+  background-color: rgba(34, 34, 34, 0.83);
+}
+
 .select-category, .input-zipcode, .option-category, select, #start, #end {
   padding: 0.5rem 0.8rem !important;
   border-radius: 6px !important;
