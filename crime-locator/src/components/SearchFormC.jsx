@@ -108,7 +108,7 @@ function SearchFormC({ setSubmittedValue }) {
             {selectedSearchMethod === "zipcode" && (
               <div>
                 <input
-                  className="appearance-none border border-sky-500 bg-transparent w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                  className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
                   type="text"
                   value={inputValue}
                   onChange={handleInputChange}
