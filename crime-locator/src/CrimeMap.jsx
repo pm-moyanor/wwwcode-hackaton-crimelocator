@@ -32,8 +32,8 @@ const CrimeMap = ({ submittedValue }) => {
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: [-112.079417, 33.448271],
-      zoom: 12,
-      maxZoom: 20,
+      zoom: 9,
+      maxZoom: 14,
     });
 
     newMap.on("load", () => {
