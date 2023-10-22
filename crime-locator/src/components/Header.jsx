@@ -19,9 +19,6 @@ const Header = () => {
             <a href="#map" className="mr-20 font-medium hover:text-gray-900">
               Map
             </a>
-            <a href="#readme" className="mr-20 font-medium hover:text-gray-900">
-              READ ME
-            </a>
             <a href="#footer" className="font-medium hover:text-gray-900">
               Team
             </a>
