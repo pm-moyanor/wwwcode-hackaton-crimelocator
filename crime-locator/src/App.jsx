@@ -5,6 +5,7 @@ import { useState } from "react";
 import Header from "./components/Header";
 import Intro from "./components/Intro";
 import SearchFormC from "./components/SearchFormC";
+import ColorChart from "./components/ColorChart";
 import Footer from "./components/Footer";
 
 function App() {
