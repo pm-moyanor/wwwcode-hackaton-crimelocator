@@ -37,6 +37,7 @@ function SearchFormC({ setSubmittedValue }) {
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
+    console.log(selectedCategory)
   };
 
   const validateInputs = () => {
@@ -47,9 +48,9 @@ function SearchFormC({ setSubmittedValue }) {
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = "Start and End date are required";
     }
-    if (selectedSearchMethod === "category" && !selectedCategory) {
-      newErrors.category = "Select a category";
-    }
+    // if (selectedSearchMethod === "category" && !selectedCategory) {
+    //   newErrors.category = "Select a category";
+    // }
 
     setErrors(newErrors);
 
@@ -66,7 +67,7 @@ function SearchFormC({ setSubmittedValue }) {
         zipcode: selectedSearchMethod === "zipcode" ? inputValue : null,
         city: selectedSearchMethod === "city" ? "city" : null,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
-        category: selectedSearchMethod === "category" ? selectedCategory : null,
+        category: selectedCategory
       });
 
       setInputValue("");
@@ -162,7 +163,7 @@ function SearchFormC({ setSubmittedValue }) {
               value={selectedCategory}
               onChange={handleCategoryChange}
             >
-              <option value="">Select Category </option>
+              <option value="">Select Category</option>
 
               {crimeTypes.map((type) => (
                 <option key={type} value={type}>

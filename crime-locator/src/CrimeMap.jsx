@@ -1,7 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
-import ColorChart from "./components/ColorChart";
 import "./CrimeMap.css";
 import { totalCountColors } from "../colors";
 
@@ -17,22 +16,24 @@ function getColorAndSize(totalCount) {
   if (matchingColorAndSize) {
     return matchingColorAndSize;
   } else {
-    console.log(`Color for  0 - ${totalCount}: gray`);
+    console.log(`Color for ${totalCount}: gray`);
+    // If no match found, return a default color and size, replace with error handling
+    return { color: "gray", width: 30, height: 30 };
   }
 }
 
 const CrimeMap = ({ submittedValue }) => {
+  console.log(submittedValue);
   const mapContainerRef = useRef(null); // Save map container
   const [map, setMap] = useState(null);
   const [totalCount, setTotalCount] = useState("");
-  const [totalCountLeyend, setTotalCountLeyend] = useState("count");
 
   useEffect(() => {
     const newMap = new mapboxgl.Map({
       container: mapContainerRef.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center : [-112.1037885, 33.5050505],
-      zoom: 8,
+      center: [-112.079417, 33.448271],
+      zoom: 12,
       maxZoom: 20,
     });
 
@@ -40,14 +41,15 @@ const CrimeMap = ({ submittedValue }) => {
       setMap(newMap);
 
       const phoenixBounds = [
-        [-113.207167, 32.791773], // Southwest corner 
-        [-111.00041, 34.218328],  // Northeast corner 
+        [-112.3411, 33.3062],
+        [-111.8652, 33.7873],
       ];
 
       newMap.setMaxBounds(phoenixBounds);
       newMap.addControl(new mapboxgl.NavigationControl(), "top-left");
 
       const { zipcode, dates, category, searchMethod } = submittedValue || {};
+
       const { startDate, endDate } = dates || {};
       const formattedStartDate = `${startDate.split("-")[1]}/${
         startDate.split("-")[2]
@@ -70,11 +72,9 @@ const CrimeMap = ({ submittedValue }) => {
           .get(baseURL)
           .then((response) => {
             const data = response.data;
-           
+
             if (data.count) {
               let count = data.count;
-
-              const { zipcode } = submittedValue;
 
               const matchingColorAndSize = getColorAndSize(count);
 
@@ -85,6 +85,7 @@ const CrimeMap = ({ submittedValue }) => {
                   if (!response.ok) {
                     throw new Error("Network response was not ok");
                   }
+
                   return response.json();
                 })
                 .then((geocodingData) => {
@@ -97,20 +98,23 @@ const CrimeMap = ({ submittedValue }) => {
 
                     const customMarkerElement = document.createElement("div");
                     customMarkerElement.className = "custom-marker";
-                    customMarkerElement.innerHTML = `<div class="marker-content">${
-                      count || ""
-                    }</div>`;
+                
+                    customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
 
                     customMarkerElement.style.backgroundColor =
                       matchingColorAndSize.color;
+                  
                     customMarkerElement.style.width =
                       matchingColorAndSize.width + "px";
+          
                     customMarkerElement.style.height =
                       matchingColorAndSize.height + "px";
 
                     new mapboxgl.Marker({ element: customMarkerElement })
+                
                       .setLngLat([longitude, latitude])
                       .addTo(newMap);
+               
                   } else {
                     alert("No results found for the predefined location.");
                   }
@@ -119,32 +123,35 @@ const CrimeMap = ({ submittedValue }) => {
                   console.error("Geocoding error:", error);
                 });
             }
+
           })
           .catch((error) => {
             console.error(error);
           });
       } else if (searchMethod === "city") {
+        console.log(category);
         axios
           .get(
             `http://localhost:9090/crimeByCity?city=Phoenix&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`
           )
           .then((cityResponse) => {
             const cityData = cityResponse.data;
+            console.log(cityData);
 
             // Extract all unique zip codes fro cityData
             const zipcodes = Array.from(
               new Set(cityData.map((item) => item.zipcode))
             );
 
+       
             const fetchCategoriesForZipcodes = (zipcodes) => {
               zipcodes.forEach((zipcode) => {
                 axios
                   .get(
-                    `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}&&category=${category}`
+                    `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`
                   )
                   .then((response) => {
                     const data = response.data;
-                  
 
                     const matchingColorAndSize =
                       data.count !== 0 && getColorAndSize(data.count);
@@ -169,7 +176,7 @@ const CrimeMap = ({ submittedValue }) => {
                           const customMarkerElement =
                             document.createElement("div");
                           customMarkerElement.className = "custom-marker";
-                          customMarkerElement.innerHTML = `<div class="marker-content">${
+                          customMarkerElement.innerHTML = `<div>${
                             data.count || ""
                           }</div>`;
 
@@ -210,9 +217,10 @@ const CrimeMap = ({ submittedValue }) => {
           .get(baseURL)
           .then((response) => {
             const data = response.data;
-      
+            console.log(data);
             data.forEach((item) => {
               let count = item;
+
               if (item.count) {
                 count = item.count;
               }
@@ -227,6 +235,7 @@ const CrimeMap = ({ submittedValue }) => {
                   if (!response.ok) {
                     throw new Error("Network response was not ok");
                   }
+
                   return response.json();
                 })
                 .then((geocodingData) => {
@@ -239,9 +248,7 @@ const CrimeMap = ({ submittedValue }) => {
 
                     const customMarkerElement = document.createElement("div");
                     customMarkerElement.className = "custom-marker";
-                    customMarkerElement.innerHTML = `<div class "marker-content">${
-                      count || ""
-                    }</div>`;
+                    customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
 
                     customMarkerElement.style.backgroundColor =
                       matchingColorAndSize.color;
@@ -272,12 +279,13 @@ const CrimeMap = ({ submittedValue }) => {
   }, [submittedValue]);
 
   return (
-    <div className="relative ">
-     
+    <div>
+      <h1>Crime rate</h1>
+    
+    
       <div className="map">
         <div className="map-container" ref={mapContainerRef} />
       </div>
-      <ColorChart/>
     </div>
   );
 };
