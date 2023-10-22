@@ -36,7 +36,7 @@ header {
 .intro {
   padding-top: 100px;
   position: relative;
-  height: 600px;
+  height: 700px;
   padding: 3rem 0;
   background-image: url("./assets/map-locator.jpg");
   background-repeat: no-repeat;
@@ -44,8 +44,23 @@ header {
 }
 
 .intro p {
+  font-family: 'Open Sans', sans-serif;
   width: 60%;
   line-height: 30px;
+  font-size: 1.1rem;
+  line-height: 30px;
+  font-weight: 300;
+}
+
+.intro ul {
+  font-family: 'Open Sans', sans-serif;
+  list-style: disc;
+  padding: 0 0 0 22px;
+}
+
+.intro span {
+  font-weight: 800;
+  color: rgb(158, 155, 155);
 }
 
 .overlay {
