@@ -26,7 +26,7 @@ const CrimeMap = ({ submittedValue }) => {
 
   const mapContainerRef = useRef(null); // Save map container
   const [map, setMap] = useState(null);
-  const [totalCount, setTotalCount] = useState("");
+
 
   useEffect(() => {
     const newMap = new mapboxgl.Map({
@@ -51,12 +51,12 @@ const CrimeMap = ({ submittedValue }) => {
       const { zipcode, dates, category, searchMethod } = submittedValue || {};
 
       const { startDate, endDate } = dates || {};
-      const formattedStartDate = `${startDate.split("-")[1]}/${
-        startDate.split("-")[2]
-      }/${startDate.split("-")[0]}`;
-      const formattedEndDate = `${endDate.split("-")[1]}/${
-        endDate.split("-")[2]
-      }/${endDate.split("-")[0]}`;
+      const formattedStartDate = startDate
+      ? `${startDate.split("-")[1]}/${startDate.split("-")[2]}/${startDate.split("-")[0]}`
+      : null;
+    const formattedEndDate = endDate
+      ? `${endDate.split("-")[1]}/${endDate.split("-")[2]}/${endDate.split("-")[0]}`
+      : null;
 
       let baseURL = "";
 

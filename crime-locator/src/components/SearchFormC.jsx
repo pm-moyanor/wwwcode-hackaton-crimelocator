@@ -37,7 +37,6 @@ function SearchFormC({ setSubmittedValue }) {
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
-    console.log(selectedCategory)
   };
 
   const validateInputs = () => {
@@ -48,9 +47,9 @@ function SearchFormC({ setSubmittedValue }) {
     if (!selectedStartDate || !selectedEndDate) {
       newErrors.date = " *Start and End date are required";
     }
-    // if (selectedSearchMethod === "category" && !selectedCategory) {
-    //   newErrors.category = "Select a category";
-    // }
+    if (selectedSearchMethod === "category" && !selectedCategory) {
+      newErrors.category = "Select a category";
+    }
 
     setErrors(newErrors);
 
@@ -153,9 +152,9 @@ function SearchFormC({ setSubmittedValue }) {
         </div>
         {selectedSearchMethod !== "category" && (
           <div className=" flex flex-row justify-start py-1">
-            {/* <label htmlFor="zipcode" className="py-1 mr-3 ">
+            <label htmlFor="zipcode" className="py-1 mr-3 ">
               Select category
-            </label> */}
+            </label>
             <select
               className="appearance-none bg-white text-gray-500 py-1 mr-3 leading-tight focus:outline-none"
               value={selectedCategory}
