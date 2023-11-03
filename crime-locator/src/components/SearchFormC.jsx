@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const crimeTypes = [
   "theft",
@@ -12,23 +14,19 @@ const crimeTypes = [
 
 function SearchFormC({ setSubmittedValue }) {
   const [selectedSearchMethod, setSelectedSearchMethod] = useState("zipcode");
-
-  const [zipcodeInputValue, setZipcodeInputValue] = useState("");
-  const [cityInputValue, setCityInputValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
   const [selectedStartDate, setSelectedStartDate] = useState("");
   const [selectedEndDate, setSelectedEndDate] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleZipcodeInputChange = (e) => {
-    setZipcodeInputValue(e.target.value);
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value);
   };
 
-  const handleCityInputChange = (e) => {
-    setCityInputValue(e.target.value);
-  };
   const handleSearchMethodChange = (e) => {
     setSelectedSearchMethod(e.target.value);
+    setInputValue(""); // Clear the input field when search method changes
   };
 
   const handleStartDateChange = (e) => {
@@ -45,10 +43,10 @@ function SearchFormC({ setSubmittedValue }) {
 
   const validateInputs = () => {
     const newErrors = {};
-    if (selectedSearchMethod === "zipcode" && !zipcodeInputValue) {
+    if (selectedSearchMethod === "zipcode" && !inputValue) {
       newErrors.zipcode = " *Zipcode is required";
     }
-    if (selectedSearchMethod === "city" && !cityInputValue) {
+    if (selectedSearchMethod === "city" && !inputValue) {
       newErrors.city = " *City is required";
     }
     if (!selectedStartDate || !selectedEndDate) {
@@ -70,49 +68,42 @@ function SearchFormC({ setSubmittedValue }) {
     if (isFormValid) {
       setSubmittedValue({
         searchMethod: selectedSearchMethod,
-        zipcode: selectedSearchMethod === "zipcode" ? zipcodeInputValue : null,
-        city: selectedSearchMethod === "city" ? "cityInputValue" : null,
+        inputValue:
+          selectedSearchMethod === "category" ? selectedCategory : inputValue,
         dates: { startDate: selectedStartDate, endDate: selectedEndDate },
-        category: selectedCategory
+        category: selectedCategory,
       });
-
-   
     }
   };
 
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [selectedSearchMethod]);
+
   return (
-    <div className="search-box m-auto" id="map">
+    <div className="search-box my-12 p-5 h-[400px] w-full flex justify-center " id="map">
       <form
-        className="flex flex-col items-center justify-center"
+        className="flex flex-col items-center border justify-center w-2/5 font-karla p-10"
         onSubmit={handleSubmit}
       >
-        <div className="flex flex-col justify-between py-1 items-center filters-mob">
-          <div className="zipcode py-1 mr-3 ">
+        <div className="flex flex-col w-full justify-around py-1  mb-5 mt-5">
+          <div className="search-method flex justify-center text-gray-300 text-md uppercase pb-5 w-full">
             <input
               type="radio"
               name="searchMethod"
               id="city"
               value="city"
+              checked={selectedSearchMethod === "city"}
               onChange={handleSearchMethodChange}
             />
-            <label htmlFor="city">Search by City</label>
-            {selectedSearchMethod === "city" && (
-              <div>
-                <input
-                  className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none input-zipcode"
-                  type="text"
-                  value={cityInputValue}
-                  onChange={handleCityInputChange}
-                  placeholder="enter a City"
-                />
-                {errors.city && (
-                  <p className="text-red-500 flex items-center text-sm required">{errors.city}</p>
-                )}
-              </div>
-            )}
-          </div>
+            <label htmlFor="city" className="mr-10 ml-1">
+              Search by City
+            </label>
 
-          <div className="zipcode py-1 mr-3 ">
             <input
               type="radio"
               name="searchMethod"
@@ -121,25 +112,10 @@ function SearchFormC({ setSubmittedValue }) {
               checked={selectedSearchMethod === "zipcode"}
               onChange={handleSearchMethodChange}
             />
-            <label htmlFor="zipcode">Search by Zipcode</label>
-            {selectedSearchMethod === "zipcode" && (
-              <div>
-                <input
-                  className="appearance-none bg-white w-56 text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none input-zipcode"
-                  type="text"
-                  value={zipcodeInputValue}
-                  onChange={handleZipcodeInputChange}
-                  placeholder="enter a Zipcode"
-                />
-                {errors.zipcode && (
-                  <p className="text-red-500 flex items-center text-sm required">{errors.zipcode}</p>
-                )}
-              </div>
-            )}
-          </div>
+            <label htmlFor="zipcode" className="mr-10 ml-1">
+              Search by Zipcode
+            </label>
 
-
-          <div className="py-1 mr-3 category">
             <input
               type="radio"
               name="searchMethod"
@@ -148,54 +124,70 @@ function SearchFormC({ setSubmittedValue }) {
               checked={selectedSearchMethod === "category"}
               onChange={handleSearchMethodChange}
             />
-            <label htmlFor="category">Search by Category</label>
-            {selectedSearchMethod === "category" && (
+            <label htmlFor="category" className="mr-10 ml-1">
+              Search by Category
+            </label>
+          </div>
+          <span className="h-px w-full bg-gray-900"></span>
+          {selectedSearchMethod !== "category" && (
+            <input
+              className="appearance-none bg-gray-900 w-full text-gray-500 py-1 px-2 mt-5 h-10 leading-tight border border-gray-700 focus:outline-none"
+              type="text"
+              value={inputValue}
+              onChange={handleInputChange}
+              ref={inputRef}
+              placeholder={
+                selectedSearchMethod === "city"
+                  ? "enter a City"
+                  : "enter a Zipcode"
+              }
+            />
+          )}
+
+          {selectedSearchMethod === "category" && (
+            <>
               <select
-                className="appearance-none bg-white text-gray-500 py-1 mr-3 leading-tight focus:outline-none select-category"
+                className="bg-gray-900 w-full text-gray-200 py-2 px-4 mt-5 h-10 focus:outline-none select appearance-none border border-gray-700 "
                 value={selectedCategory}
                 onChange={handleCategoryChange}
               >
-                <option value="" className="option-category">All Categories</option>
+                <option value="" className=" option flex items-center">
+                  ALL CATEGORIES
+                </option>
 
                 {crimeTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
+                  <option
+                    key={type}
+                    value={type}
+                    className=" option flex items-center"
+                  >
+                    {type.toUpperCase()}
                   </option>
                 ))}
               </select>
-            )}
-            <>
-              {" "}
-              {errors.category && (
-                <p className="text-red-500 flex items-center required text-sm">{errors.category}</p>
-              )}
             </>
-          </div>
+          )}
+
+          {errors.zipcode && (
+            <p className="text-red-500 flex items-center text-sm required">
+              {errors.zipcode}
+            </p>
+          )}
+          {errors.city && (
+            <p className="text-red-500 flex items-center text-sm required">
+              {errors.city}
+            </p>
+          )}
+          {errors.category && (
+            <p className="text-red-500 flex items-center required text-sm">
+              {errors.category}
+            </p>
+          )}
         </div>
-        {selectedSearchMethod !== "category" && (
-          <div className=" flex flex-row justify-start py-1">
-            <label htmlFor="zipcode" className="py-1 mr-3 ">
-              Select category
-            </label>
-            <select
-              className="appearance-none bg-white text-gray-500 py-1 mr-3 leading-tight focus:outline-none"
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-            >
-              <option value="">All Categories</option>
-
-              {crimeTypes.map((type) => (
-                <option key={type} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-
+        <span className="h-px w-full bg-gray-900"></span>
         <div className="flex flex-row max-w-xl justify-between py-1  mb-5 mt-5">
           <input
-            className="appearance-none bg-white text-gray-500 w-36 py-1 leading-tight focus:outline-none"
+            className="appearance-none bg-gray-900 uppercase text-gray-400 w-34 py-1  px-3 leading-tight focus:outline-none"
             type="date"
             id="start"
             value={selectedStartDate}
@@ -203,12 +195,18 @@ function SearchFormC({ setSubmittedValue }) {
             min="2010-01-01"
             max="2023-10-18"
           />
-          {errors.date && <p className="text-red-500 required flex items-center text-sm">{errors.date}</p>}
+          {errors.date && (
+            <p className="text-red-500 required flex items-center text-sm">
+              {errors.date}
+            </p>
+          )}
 
-          <span className="align-middle mx-6 text-gray-500 mt-0.5 flex items-center">to</span>
+          <span className="align-middle mx-10 text-gray-500 mt-0.5 flex items-center">
+            to
+          </span>
 
           <input
-            className="appearance-none bg-white text-gray-500 w-36 py-1 leading-tight focus:outline-none"
+            className="appearance-none bg-gray-900 uppercase text-gray-400 w-34 py-1 px-3 focus:outline-none"
             type="date"
             id="end"
             value={selectedEndDate}
@@ -219,7 +217,7 @@ function SearchFormC({ setSubmittedValue }) {
         </div>
 
         <button
-          className="flex-shrink-0 bg-black text-white btn-black"
+          className="flex-shrink-0 w-full h-10 text-sm bg-gray-600 uppercase  text-gray-200 btn-black"
           type="submit"
         >
           Search

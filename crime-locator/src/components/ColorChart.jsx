@@ -4,7 +4,7 @@ import React from "react";
 
 const ColorChart = ({}) => {
   return (
-    <div className="absolute bottom-4 right-4 p-2 bg-white text-black shadow-md">
+    <div className="absolute bottom-8 right-28 p-2 bg-white text-black shadow-md">
       <div className="flex flex-col w-36">
         {totalCountColors.map((item, index) => (
           <div

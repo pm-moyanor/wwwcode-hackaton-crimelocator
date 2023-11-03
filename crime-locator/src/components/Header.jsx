@@ -1,28 +1,18 @@
 import React from "react";
 import "./header.css";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlassLocation } from "@fortawesome/free-solid-svg-icons";
 const Header = () => {
   return (
     <div className="header-box">
-      <header className="bg-white">
-        <div className="container box justify-between lg:justify-center flex flex-row items-center p-6 md:p-0">
-          <div>
-            <img
-              src="../src/assets/logo-crimemap-pro.png"
-              alt="CrimeMap Pro logo"
-            />
+      <header className="bg-white fixed top-0 left-0 right-0 z-50">
+        <div className="box justify-between lg:justify-center flex flex-row items-center p-6 md:p-0">
+          <div className="flex align-middle h-12">
+        
+            <h1 className="text-[36px] mt-px font-extrabold text-red-800 font-blackHanSans">CRIME MAP PR</h1>
+            <FontAwesomeIcon icon={faMagnifyingGlassLocation} className="text-red-800 mt-[10px] text-[37px]"/>
           </div>
-          <nav className="nav flex flex-wrap items-center justify-center pl-24 text-base md:ml-auto">
-            <a href="#intro" className="mr-20 font-medium hover:text-gray-900">
-              About
-            </a>
-            <a href="#map" className="mr-20 font-medium hover:text-gray-900">
-              Map
-            </a>
-            <a href="#footer" className="font-medium hover:text-gray-900">
-              Team
-            </a>
-          </nav>
+      
         </div>
       </header>
     </div>

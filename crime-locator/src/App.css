@@ -1,7 +1,6 @@
 #root {
   text-align: center;
-  background-color: rgb(231, 231, 234);
-  font-family: "Ruda", sans-serif;
+
 }
 
 html {
@@ -9,11 +8,12 @@ html {
   scroll-behavior: smooth;
 }
 
+
 header {
   position: fixed;
   z-index: 1;
   width: 100%;
-  background: #ffffff;
+  background: #ffffff02;
   margin: 0 auto;
   height: 80px;
   display: flex;
@@ -33,18 +33,22 @@ header {
   font-size: 1.5rem;
 }
 
-.intro {
-  padding-top: 100px;
-  position: relative;
+
+
+.overlay{
+  background-color: rgba(0, 0, 0, 0.626);
   height: 700px;
-  padding: 3rem 0;
-  background-image: url("./assets/map-locator.jpg");
-  background-repeat: no-repeat;
-  background-size: auto;
+
+  position: absolute;
+}
+
+.intro img{
+
+  height: 700px;
 }
 
 .intro p {
-  font-family: 'Open Sans', sans-serif;
+ 
   width: 60%;
   line-height: 30px;
   font-size: 18px;
@@ -53,7 +57,7 @@ header {
 }
 
 .intro ul {
-  font-family: 'Open Sans', sans-serif;
+ 
   list-style: disc;
   padding: 0 0 0 22px;
 }
@@ -63,42 +67,7 @@ header {
   color: rgb(158, 155, 155);
 }
 
-.overlay {
-  position: absolute;
-  height: inherit;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  padding: 3rem 0;
-  background-color: rgba(0, 0, 0, 0.918);
-}
 
-.search-box {
-  padding: 5rem 0;
-}
-
-.category, .zipcode, .city {
-  padding: 2rem 1rem;
-}
-
-.category label, .zipcode label, .city label {
-  padding: 0 0.5rem;
-}
-
-.btn-black {
-  padding: 0.5rem 2.8rem;
-  font-size: 1rem;
-}
-
-.btn-black:hover {
-  background-color: rgba(34, 34, 34, 0.817);
-}
-
-.select-category, .input-zipcode, .option-category, select, #start, #end {
-  padding: 0.5rem 0.9rem !important;
-  border-radius: 6px !important;
-}
 
 .map {
   display: flex;

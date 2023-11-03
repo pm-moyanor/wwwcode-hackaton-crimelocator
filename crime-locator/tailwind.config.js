@@ -2,7 +2,12 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        karla: ['Karla', 'sans', 'Black Han Sans'], 
+        blackHanSans: ['Black Han Sans','sans' ], 
+      },
+    },
   },
   plugins: [],
 };

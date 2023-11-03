@@ -334,8 +334,9 @@ const CrimeMap = ({ submittedValue }) => {
   }, [submittedValue]);
 
   return (
-    <div className="relative ">
-      <div className="map">
+    <div className="relative">
+      <div className="map m-20 ">
+    
         <div className="map-container" ref={mapContainerRef} />
       </div>
       <ColorChart />
