@@ -3,7 +3,7 @@ import "./footer.css";
 
 const Footer = () => {
   return (
-    <div className="text-white mt-64">
+    <div className="text-gray-200 mt-64 " style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.139)" }}>
       <footer id="footer">
         <div className="team text-sm">
           <span className="team-subtitle">Made by:</span>

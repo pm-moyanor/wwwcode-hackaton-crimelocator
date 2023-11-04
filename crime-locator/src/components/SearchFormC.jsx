@@ -85,9 +85,10 @@ function SearchFormC({ setSubmittedValue }) {
   }, [selectedSearchMethod]);
 
   return (
-    <div className="search-box my-12 p-5 h-[400px] w-full flex justify-center " id="map">
+    <div className="search-box my-12 p-5 h-[400px] w-full flex justify-center " id="map" >
       <form
-        className="flex flex-col items-center border justify-center w-2/5 font-karla p-10"
+        className="flex flex-col items-center justify-center w-3/5 font-karla p-10"
+        style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.139)" }}
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col w-full justify-around py-1  mb-5 mt-5">
@@ -217,7 +218,7 @@ function SearchFormC({ setSubmittedValue }) {
         </div>
 
         <button
-          className="flex-shrink-0 w-full h-10 text-sm bg-gray-600 uppercase  text-gray-200 btn-black"
+          className="flex-shrink-0 w-full h-10 text-md bg-red-800 uppercase  text-gray-200 btn-black"
           type="submit"
         >
           Search

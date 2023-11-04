@@ -338,6 +338,8 @@ const CrimeMap = ({ submittedValue }) => {
       <div className="map m-20 ">
     
         <div className="map-container" ref={mapContainerRef} />
+        <div className="absolute top-0 left-0 w-full h-full mx-20 bg-grey-400 opacity-25"></div>
+
       </div>
       <ColorChart />
     </div>

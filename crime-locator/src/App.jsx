@@ -12,7 +12,7 @@ function App() {
   const [submittedValue, setSubmittedValue] = useState("");
 
   return (
-    <div className="bg-gray-800">
+    <div className="bg-gray-900">
       <Header />
       <Intro />
       <SearchFormC
