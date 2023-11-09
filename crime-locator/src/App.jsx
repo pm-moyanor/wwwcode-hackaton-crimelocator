@@ -7,12 +7,13 @@ import SearchFormC from "./components/SearchFormC";
 import Footer from "./components/Footer";
 import backgroundImage from "./assets/map-locator.jpg";
 
+
 function App() {
   const [submittedValue, setSubmittedValue] = useState("");
 
   return (
     <div>
-   <Header />
+      <Header />
       <main className="relative py-48">
         <img
           src={backgroundImage}
@@ -20,7 +21,6 @@ function App() {
           className="absolute inset-0 object-cover w-full h-full z-[-2]"
         />
         <div className="absolute inset-0 bg-stone-300  z-[-1] opacity-95"></div>
-     
 
         <SearchFormC
           submittedValue={submittedValue}

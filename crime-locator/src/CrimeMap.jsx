@@ -5,8 +5,13 @@ import ColorChart from "./components/ColorChart";
 import "./CrimeMap.css";
 import { totalCountColors } from "../colors";
 
-mapboxgl.accessToken =
-  "pk.eyJ1IjoicG1tb3lhbm9yIiwiYSI6ImNsbnVrZzN5bjBkOHkybHFqYXNzb3IxcjUifQ.99b7wHbQY6pShWHiVCNZnA";
+
+console.log("VITE_MAPBOX_TOKEN", import.meta.env.VITE_MAPBOX_TOKEN);
+
+mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
+
+
+
 
 function getColorAndSize(totalCount) {
   const matchingColorAndSize = totalCountColors.find((option) => {
