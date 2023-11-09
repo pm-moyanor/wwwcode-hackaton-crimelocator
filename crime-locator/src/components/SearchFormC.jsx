@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { motion, AnimatePresence } from "framer-motion";
+
 
 const crimeTypes = [
   "theft",
@@ -83,12 +85,15 @@ function SearchFormC({ setSubmittedValue }) {
       inputRef.current.focus();
     }
   }, [selectedSearchMethod]);
-
+console.log(inputValue)
   return (
-    <div className="search-box my-12 p-5 h-[400px] w-full flex justify-center " id="map" >
+    <div
+      className="search-box my-2 p-5 h-[500px] w-full z-20 flex justify-center "
+      id="map"
+    >
       <form
-        className="flex flex-col items-center justify-center w-3/5 font-karla p-10"
-        style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.139)" }}
+        className="flex flex-col bg-cyan-900 items-center justify-center w-3/5 font-karla p-12"
+        style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.109)" }}
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col w-full justify-around py-1  mb-5 mt-5">
@@ -129,26 +134,53 @@ function SearchFormC({ setSubmittedValue }) {
               Search by Category
             </label>
           </div>
-          <span className="h-px w-full bg-gray-900"></span>
+          <span className="h-px w-full bg-gray-400"></span>
           {selectedSearchMethod !== "category" && (
-            <input
-              className="appearance-none bg-gray-900 w-full text-gray-500 py-1 px-2 mt-5 h-10 leading-tight border border-gray-700 focus:outline-none"
-              type="text"
-              value={inputValue}
-              onChange={handleInputChange}
-              ref={inputRef}
-              placeholder={
-                selectedSearchMethod === "city"
-                  ? "enter a City"
-                  : "enter a Zipcode"
-              }
-            />
+            <>
+              <input
+                className="appearance-none bg-cyan-800 w-full text-gray-500 py-1 px-2 mt-5 h-10 leading-tight border border-gray-700 focus:outline-none"
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                ref={inputRef}
+                placeholder={
+                  selectedSearchMethod === "city"
+                    ? "enter a City"
+                    : "enter a Zipcode"
+                }
+              />
+              <div
+                className={`category-input ${
+                  selectedSearchMethod === "category" ? "hidden" : ""
+                }`}
+              >
+                <select
+                  className=" bg-cyan-800 w-full text-gray-200 py-2 px-4 mt-5 h-10 focus:outline-none select appearance-none border border-gray-700 "
+                  value={selectedCategory}
+                  onChange={handleCategoryChange}
+                >
+                  <option value="" className=" option flex items-center">
+                    ALL CATEGORIES
+                  </option>
+
+                  {crimeTypes.map((type) => (
+                    <option
+                      key={type}
+                      value={type}
+                      className=" option flex items-center"
+                    >
+                      {type.toUpperCase()}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </>
           )}
 
           {selectedSearchMethod === "category" && (
             <>
               <select
-                className="bg-gray-900 w-full text-gray-200 py-2 px-4 mt-5 h-10 focus:outline-none select appearance-none border border-gray-700 "
+                className=" bg-cyan-950 w-full text-gray-200 py-2 px-4 mt-5 h-10 focus:outline-none select appearance-none border border-gray-700 "
                 value={selectedCategory}
                 onChange={handleCategoryChange}
               >
@@ -185,10 +217,10 @@ function SearchFormC({ setSubmittedValue }) {
             </p>
           )}
         </div>
-        <span className="h-px w-full bg-gray-900"></span>
+        <span className="h-px w-full bg-gray-400"></span>
         <div className="flex flex-row max-w-xl justify-between py-1  mb-5 mt-5">
           <input
-            className="appearance-none bg-gray-900 uppercase text-gray-400 w-34 py-1  px-3 leading-tight focus:outline-none"
+            className="appearance-none bg-cyan-800 uppercase text-gray-400 w-34 py-1  px-3 leading-tight focus:outline-none"
             type="date"
             id="start"
             value={selectedStartDate}
@@ -202,12 +234,12 @@ function SearchFormC({ setSubmittedValue }) {
             </p>
           )}
 
-          <span className="align-middle mx-10 text-gray-500 mt-0.5 flex items-center">
+          <span className="align-middle mx-10 text-gray-200 mt-0.5 flex items-center">
             to
           </span>
 
           <input
-            className="appearance-none bg-gray-900 uppercase text-gray-400 w-34 py-1 px-3 focus:outline-none"
+            className="appearance-none bg-cyan-800 uppercase text-gray-400 w-34 py-1 px-3 focus:outline-none"
             type="date"
             id="end"
             value={selectedEndDate}
@@ -218,7 +250,7 @@ function SearchFormC({ setSubmittedValue }) {
         </div>
 
         <button
-          className="flex-shrink-0 w-full h-10 text-md bg-red-800 uppercase  text-gray-200 btn-black"
+          className="flex-shrink-0 w-full h-10 text-md bg-red-600 uppercase  text-gray-200 btn-black"
           type="submit"
         >
           Search

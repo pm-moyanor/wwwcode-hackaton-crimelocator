@@ -335,15 +335,18 @@ const CrimeMap = ({ submittedValue }) => {
 
   return (
     <div className="relative">
-      <div className="map m-20 ">
-    
-        <div className="map-container" ref={mapContainerRef} />
-        <div className="absolute top-0 left-0 w-full h-full mx-20 bg-grey-400 opacity-25"></div>
-
+      <div className="map relative">
+        <div className="map-container w-5/6 relative m-24">
+          <div ref={mapContainerRef} className="w-full h-[700px]" />
+          <div className="absolute bottom-1 right-0  bg-white text-black shadow-md">
+          <ColorChart />
+          </div>
+      
+        </div>
       </div>
-      <ColorChart />
     </div>
   );
+  
 };
 
 export default CrimeMap;

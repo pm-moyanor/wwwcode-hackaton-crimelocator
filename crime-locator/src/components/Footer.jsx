@@ -1,45 +1,44 @@
 import React from "react";
-import "./footer.css";
 
 const Footer = () => {
   return (
-    <div className="text-gray-200 mt-64 " style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.139)" }}>
+    <div className=" text-gray-200 bg-gray-800 " style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.139)" }}>
       <footer id="footer">
-        <div className="team text-sm">
-          <span className="team-subtitle">Made by:</span>
-          <div className="team-members">
-            <article className="member">
-              <i className="fa-brands fa-github"></i>
+        <div className=" w-[500px] text-sm">
+          <span className="text-gray-400">Made by:</span>
+          <div className="flex justify-around m-2">
+            <div className="flex items-center justify-center">
+              <i className="fab fa-github text-gray-400 text-xl"></i>
               <a
                 href="https://github.com/KR411-prog"
                 target="_blank"
-                className="name pl-2"
+                className="text-white pl-2 hover:underline"
               >
                 Radha Ramadoss
               </a>
-            </article>
+            </div>
 
-            <article className="member">
-              <i className="fa-brands fa-github"></i>
+            <div className="flex items-center">
+              <i className="fab fa-github text-gray-400 text-xl"></i>
               <a
                 href="https://github.com/pm-moyanor"
                 target="_blank"
-                className="name pl-2"
+                className="text-white pl-2 hover:underline"
               >
                 Paula Moyano
               </a>
-            </article>
+            </div>
 
-            <article>
-              <i className="fa-brands fa-github"></i>
+            <div className="flex items-center">
+              <i className="fab fa-github text-gray-400 text-xl"></i>
               <a
                 href="https://www.github.com/Shinnmar"
                 target="_blank"
-                className="name pl-2"
+                className="text-white pl-2 hover:underline"
               >
                 Shirley Ramos
               </a>
-            </article>
+            </div>
           </div>
         </div>
       </footer>
