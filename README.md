@@ -1,5 +1,5 @@
 # CrimeMap Pro
-![Screenshot](path/to/your/screencapture-localhost-3000-2023-11-09-12_01_48.png)
+![Screenshot](screencapture-localhost-3000-2023-11-09-12_01_48.png)
 
 This project provides user-friendly access to crime data where the users can filter and sort data by categories like theft, assault, burglary, robbery, murder, rape, and drug crimes. The project provies location based insights where it offers crime counts by zipcode and city.
 
