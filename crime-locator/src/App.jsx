@@ -14,7 +14,7 @@ function App() {
   return (
     <div>
       <Header />
-      <main className="relative py-48">
+      <main className="relative py-28 md:py-48">
         <img
           src={backgroundImage}
           alt="Background Image"

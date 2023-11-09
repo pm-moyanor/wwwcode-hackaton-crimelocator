@@ -1,17 +1,12 @@
 import React, { useRef, useEffect, useState } from "react";
+
 import axios from "axios";
 import mapboxgl from "mapbox-gl";
 import ColorChart from "./components/ColorChart";
 import "./CrimeMap.css";
 import { totalCountColors } from "../colors";
 
-
-console.log("VITE_MAPBOX_TOKEN", import.meta.env.VITE_MAPBOX_TOKEN);
-
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-
-
-
 
 function getColorAndSize(totalCount) {
   const matchingColorAndSize = totalCountColors.find((option) => {
@@ -25,10 +20,35 @@ function getColorAndSize(totalCount) {
     console.log(`Color for ${totalCount}: gray`);
     return { color: "gray", width: 30, height: 30 };
   }
-}
+}  
+
+const addCustomMarker = (newMap, longitude, latitude, count, zipcode, matchingColorAndSize) => {
+  const customMarkerElement = document.createElement("div");
+  customMarkerElement.className = "custom-marker";
+
+  customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
+
+  customMarkerElement.addEventListener("mouseenter", function () {
+    customMarkerElement.innerHTML = `<div>${zipcode || ""}</div>`;
+  });
+
+  customMarkerElement.addEventListener("mouseleave", function () {
+    customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
+  });
+
+  customMarkerElement.style.backgroundColor = matchingColorAndSize.color;
+  customMarkerElement.style.width = matchingColorAndSize.width + "px";
+  customMarkerElement.style.height = matchingColorAndSize.height + "px";
+
+  new mapboxgl.Marker({ element: customMarkerElement })
+    .setLngLat([longitude, latitude])
+    .addTo(newMap);
+};
+
+
 
 const CrimeMap = ({ submittedValue }) => {
-  const mapContainerRef = useRef(null); // Save map container
+  const mapContainerRef = useRef(null); 
   const [map, setMap] = useState(null);
 
   useEffect(() => {
@@ -51,7 +71,8 @@ const CrimeMap = ({ submittedValue }) => {
       newMap.setMaxBounds(phoenixBounds);
       newMap.addControl(new mapboxgl.NavigationControl(), "top-left");
 
-      const { zipcode, dates, category, searchMethod } = submittedValue || {};
+      const { inputValue, dates, category, searchMethod } =
+        submittedValue || {};
 
       const { startDate, endDate } = dates || {};
       const formattedStartDate = startDate
@@ -67,24 +88,24 @@ const CrimeMap = ({ submittedValue }) => {
 
       let baseURL = "";
 
-      if (searchMethod === "zipcode" && zipcode) {
+      if (searchMethod === "zipcode") {
         if (!category) {
-          // If category is empty, exclude it from the URL
-          baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
+          baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${inputValue}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
         } else {
-          baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${zipcode}&&category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
+          baseURL = `http://localhost:9090/crimeByZipcode?zipcode=${inputValue}&&category=${category}&&start_date=${formattedStartDate}&&end_date=${formattedEndDate}`;
         }
         axios
           .get(baseURL)
           .then((response) => {
             const data = response.data;
+
             if (data.count) {
               let count = data.count;
 
               const matchingColorAndSize = getColorAndSize(count);
 
               fetch(
-                `https://api.mapbox.com/geocoding/v5/mapbox.places/${zipcode}.json?access_token=${mapboxgl.accessToken}`
+                `https://api.mapbox.com/geocoding/v5/mapbox.places/${inputValue}.json?access_token=${mapboxgl.accessToken}`
               )
                 .then((response) => {
                   if (!response.ok) {
@@ -100,45 +121,9 @@ const CrimeMap = ({ submittedValue }) => {
                   ) {
                     const [longitude, latitude] =
                       geocodingData.features[0].center;
+                      addCustomMarker(newMap, longitude, latitude, count, zipcode, matchingColorAndSize);
 
-                    const customMarkerElement = document.createElement("div");
-                    customMarkerElement.className = "custom-marker";
-
-                    customMarkerElement.innerHTML = `<div>${
-                      count || ""
-                    }</div>`;
-
-                    customMarkerElement.addEventListener(
-                      "mouseenter",
-                      function () {
-                        customMarkerElement.innerHTML = `<div>${
-                          zipcode || ""
-                        }</div>`;
-                      }
-                    );
-
-                    customMarkerElement.addEventListener(
-                      "mouseleave",
-                      function () {
-                        customMarkerElement.innerHTML = `<div>${
-                          count || ""
-                        }</div>`;
-                      }
-                    );
-
-                    customMarkerElement.style.backgroundColor =
-                      matchingColorAndSize.color;
-
-                    customMarkerElement.style.width =
-                      matchingColorAndSize.width + "px";
-
-                    customMarkerElement.style.height =
-                      matchingColorAndSize.height + "px";
-
-                    new mapboxgl.Marker({ element: customMarkerElement })
-
-                      .setLngLat([longitude, latitude])
-                      .addTo(newMap);
+   
                   } else {
                     alert("No results found for the predefined location.");
                   }
@@ -165,7 +150,7 @@ const CrimeMap = ({ submittedValue }) => {
             const zipcodes = Array.from(
               new Set(cityData.map((item) => item.zipcode))
             );
-
+            console.log(cityData);
             const fetchCategoriesForZipcodes = (zipcodes) => {
               zipcodes.forEach((zipcode) => {
                 axios
@@ -194,43 +179,9 @@ const CrimeMap = ({ submittedValue }) => {
                         ) {
                           const [longitude, latitude] =
                             geocodingData.features[0].center;
+                            addCustomMarker(newMap, longitude, latitude, count, zipcode, matchingColorAndSize);
 
-                          const customMarkerElement =
-                            document.createElement("div");
-                          customMarkerElement.className = "custom-marker";
-
-                          customMarkerElement.style.backgroundColor =
-                            matchingColorAndSize.color;
-                          customMarkerElement.style.width =
-                            matchingColorAndSize.width + "px";
-                          customMarkerElement.style.height =
-                            matchingColorAndSize.height + "px";
-
-                          customMarkerElement.innerHTML = `<div>${
-                            count || ""
-                          }</div>`;
-
-                          customMarkerElement.addEventListener(
-                            "mouseenter",
-                            function () {
-                              customMarkerElement.innerHTML = `<div>${
-                                zipcode || ""
-                              }</div>`;
-                            }
-                          );
-
-                          customMarkerElement.addEventListener(
-                            "mouseleave",
-                            function () {
-                              customMarkerElement.innerHTML = `<div>${
-                                count || ""
-                              }</div>`;
-                            }
-                          );
-
-                          new mapboxgl.Marker({ element: customMarkerElement })
-                            .setLngLat([longitude, latitude])
-                            .addTo(newMap);
+                    
                         } else {
                           alert(
                             "No results found for the predefined location."
@@ -258,7 +209,7 @@ const CrimeMap = ({ submittedValue }) => {
           .get(baseURL)
           .then((response) => {
             const data = response.data;
-
+       
             data.forEach((item) => {
               let count = item;
 
@@ -286,40 +237,9 @@ const CrimeMap = ({ submittedValue }) => {
                   ) {
                     const [longitude, latitude] =
                       geocodingData.features[0].center;
+                      addCustomMarker(newMap, longitude, latitude, count, zipcode, matchingColorAndSize);
 
-                    const customMarkerElement = document.createElement("div");
-                    customMarkerElement.className = "custom-marker";
-
-                    customMarkerElement.innerHTML = `<div>${count || ""}</div>`;
-
-                    customMarkerElement.addEventListener(
-                      "mouseenter",
-                      function () {
-                        customMarkerElement.innerHTML = `<div>${
-                          zipcode || ""
-                        }</div>`;
-                      }
-                    );
-
-                    customMarkerElement.addEventListener(
-                      "mouseleave",
-                      function () {
-                        customMarkerElement.innerHTML = `<div>${
-                          count || ""
-                        }</div>`;
-                      }
-                    );
-
-                    customMarkerElement.style.backgroundColor =
-                      matchingColorAndSize.color;
-                    customMarkerElement.style.width =
-                      matchingColorAndSize.width + "px";
-                    customMarkerElement.style.height =
-                      matchingColorAndSize.height + "px";
-
-                    new mapboxgl.Marker({ element: customMarkerElement })
-                      .setLngLat([longitude, latitude])
-                      .addTo(newMap);
+                
                   } else {
                     alert("No results found for the predefined location.");
                   }
@@ -341,17 +261,15 @@ const CrimeMap = ({ submittedValue }) => {
   return (
     <div className="relative">
       <div className="map relative">
-        <div className="map-container w-5/6 relative m-24">
+        <div className="map-container  w-full md:w-5/6 relative m-2 md:m-24">
           <div ref={mapContainerRef} className="w-full h-[700px]" />
           <div className="absolute bottom-1 right-0  bg-white text-black shadow-md">
-          <ColorChart />
+            <ColorChart />
           </div>
-      
         </div>
       </div>
     </div>
   );
-  
 };
 
 export default CrimeMap;

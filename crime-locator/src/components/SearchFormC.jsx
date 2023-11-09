@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { motion, AnimatePresence } from "framer-motion";
 
-
 const crimeTypes = [
   "theft",
   "burglary",
@@ -85,54 +84,60 @@ function SearchFormC({ setSubmittedValue }) {
       inputRef.current.focus();
     }
   }, [selectedSearchMethod]);
-console.log(inputValue)
+  console.log(inputValue);
   return (
     <div
-      className="search-box my-2 p-5 h-[500px] w-full z-20 flex justify-center "
+      className="search-box my-2 p-2 md:p-5 h-[500px] w-full z-20 flex justify-center text-xs md:text-sm "
       id="map"
     >
       <form
-        className="flex flex-col bg-cyan-900 items-center justify-center w-3/5 font-karla p-12"
+        className="flex flex-col bg-cyan-900 items-center justify-center w-4/5 md:w-3/5 font-karla p-6 md:p-12"
         style={{ boxShadow: "0 1px 32px rgba(241, 159, 71, 0.109)" }}
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col w-full justify-around py-1  mb-5 mt-5">
-          <div className="search-method flex justify-center text-gray-300 text-md uppercase pb-5 w-full">
-            <input
-              type="radio"
-              name="searchMethod"
-              id="city"
-              value="city"
-              checked={selectedSearchMethod === "city"}
-              onChange={handleSearchMethodChange}
-            />
-            <label htmlFor="city" className="mr-10 ml-1">
-              Search by City
-            </label>
+          <div className="search-method flex flex-col md:flex-row justify-center text-gray-300 text-md uppercase pb-5 w-full ">
+            <div>
+              <input
+                type="radio"
+                name="searchMethod"
+                id="city"
+                value="city"
+                checked={selectedSearchMethod === "city"}
+                onChange={handleSearchMethodChange}
+              />
+              <label htmlFor="city" className="mr-10 ml-1">
+                Search by City
+              </label>
+            </div>
 
-            <input
-              type="radio"
-              name="searchMethod"
-              id="zipcode"
-              value="zipcode"
-              checked={selectedSearchMethod === "zipcode"}
-              onChange={handleSearchMethodChange}
-            />
-            <label htmlFor="zipcode" className="mr-10 ml-1">
-              Search by Zipcode
-            </label>
-
-            <input
-              type="radio"
-              name="searchMethod"
-              id="category"
-              value="category"
-              checked={selectedSearchMethod === "category"}
-              onChange={handleSearchMethodChange}
-            />
-            <label htmlFor="category" className="mr-10 ml-1">
-              Search by Category
-            </label>
+            <div>
+              {" "}
+              <input
+                type="radio"
+                name="searchMethod"
+                id="zipcode"
+                value="zipcode"
+                checked={selectedSearchMethod === "zipcode"}
+                onChange={handleSearchMethodChange}
+              />
+              <label htmlFor="zipcode" className="mr-10 ml-1">
+                Search by Zipcode
+              </label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="searchMethod"
+                id="category"
+                value="category"
+                checked={selectedSearchMethod === "category"}
+                onChange={handleSearchMethodChange}
+              />
+              <label htmlFor="category" className="mr-10 ml-1">
+                Search by Category
+              </label>
+            </div>
           </div>
           <span className="h-px w-full bg-gray-400"></span>
           {selectedSearchMethod !== "category" && (
@@ -218,7 +223,7 @@ console.log(inputValue)
           )}
         </div>
         <span className="h-px w-full bg-gray-400"></span>
-        <div className="flex flex-row max-w-xl justify-between py-1  mb-5 mt-5">
+        <div className="flex flex-col md:flex-row max-w-xl justify-between py-1  mb-5 mt-5">
           <input
             className="appearance-none bg-cyan-800 uppercase text-gray-400 w-34 py-1  px-3 leading-tight focus:outline-none"
             type="date"
